@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="img/icon.png">
+    <title>Usuarios</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+
+
+    <div id="navbar">
+
+    </div>
+
+    <!-- formulario de usuario -->
+    <h1 class="container">Mantenedor de usuarios</h1>
+      
+    <br><br>
+
+    <!-- formulario de usuario -->
+    <form class="row g-4" method="POST" id="formulario1" novalidate>
+      <div class="container-fluid">
+        <!-- todos los datos del cliente -->
+        <div class="row justify-content-center">
+          <!-- datos del cliente -->
+          <div class="col-sm-12 col-md-4 col-lg-4">
+
+            <!-- ID -->
+            <div class="mb-3">
+                  <label for="iduser" class="form-label">ID del Usuario</label>
+                  <input
+                    required
+                    type="number"
+                    placeholder="35"
+                    class="form-control"
+                    id="iduser"
+                    name="iduser"
+                    aria-describedby="iduserHelp"
+                  />
+                  <div class="invalid-feedback">El campo id es obligatorio</div>
+            </div>
+                
+            <!-- cliente cliente -->
+            <div class="col mb-3">
+              <label for="selectUsuario" class="form-label">Tipo de Usuario</label>
+              <select class="custom-select" name="selectUsuario" id="selectUsuario">
+                <option selected></option>
+                <option value="1">Cliente</option>
+                <option value="2">Administrador</option>
+              </select>
+              <div class="invalid-feedback">Debes seleccionar una opcion</div>
+            </div>  
+
+            <!-- rut -->
+            <div class="mb-3">
+              <label for="rut">RUT</label>
+              <input
+                type="text"
+                class="form-control"
+                id="rut"
+                name="rut"
+                placeholder="Escriba su RUT sin puntos y con guión"
+                aria-describedby="rutHelp"
+              />
+            </div>
+
+            <!-- nombre y apellido -->
+            <div class="row">
+              <!-- nombres -->
+              <div class="col mb-3">
+                <label for="name" class="form-label">Nombre</label>
+                <input
+                  
+                  type="text"
+                  placeholder=""
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  aria-describedby="nameHelp"
+                />
+              </div>
+
+              <!-- apellidos -->
+              <div class="col mb-3">
+                <label for="lastname" class="form-label">Apellido</label>
+                <input
+                  
+                  type="text"
+                  placeholder=""
+                  class="form-control"
+                  id="lastname"
+                  name="lastname"
+                  aria-describedby="lastnameHelp"
+                />
+              </div>
+            </div>
+
+            <!-- correo -->
+            <div class="mb-3">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-control"
+                placeholder="Ingrese su email aquí"
+                value=""
+                 
+                aria-describedby="emailHelp"
+              />
+              <div id="emailHelp" class="form-text">Escriba su Email</div>
+            </div>
+
+            <!-- direccion -->
+            <div class="col mb-3">
+              <label for="direccion" class="form-label">Dirección</label>
+              <textarea
+                type="text"
+                placeholder="Padre Alonso de Ovalle #3123, Santiago Centro."
+                class="form-control"
+                id="direccion"
+                aria-describedby="streetHelp"
+                name="direccion"
+              ></textarea>
+              <div id="direccionHelp" class="form-text">
+                Ingrese su calle o avenida
+              </div>
+            </div>
+
+            <!-- checkbox -->
+            <div class="mb-3 form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="exampleCheck1"
+              />
+              <label class="form-check-label" for="exampleCheck1">
+                <strong>Subscribirme a la Fundacion</strong>
+              </label>
+              <div id="nevershaverHelp" class="form-text">
+                Deseo subscribirme con un aporte de $ 3.000 mensuales y obtener
+                un 5% de descuento en mis compras.
+              </div>
+            </div> 
+
+            <!-- Generar Contraseña -->
+            <div class="mb-3">
+              <label for="passwordgenerate">Contraseña</label>
+              <div class="row">
+                <div class="col">
+                  <input
+                  type="password"
+                  id="passwordgenerate"
+                  name="passwordgenerate"
+                  class="form-control"
+                  value=""
+                  disabled
+                />
+                </div>
+
+              <div class="col">
+                <button type="button" class="btn btn-primary"  id="generarContrasena">Generar Contraseña</button>
+
+              </div>
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <!-- foto cliente -->
+          <div class="col-sm-12 col-md-4 text-center" id="foto">
+            <img class="container-fluid" src="img/fotoperfil.jpg" alt="" />
+          </div>
+        </div>
+        <!-- botones -->
+        <div class="row" id="botones">
+          <div class="col text-center">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="reset" class="btn btn-outline-primary">Nuevo</button>
+            <button type="reset" class="btn btn-danger">Eliminar</button>
+          </div>
+      </div>
+      </div>
+    </form>
+
+    
+    <br><br>
+    <!-- Tabla con registro de usuarios -->
+    <table class="table container">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Tipo usuario</th>
+              <th>RUT</th>
+              <th>Nombres</th>
+              <th>Apellidos</th>
+              <th>Correo</th>
+              <th>Dirección</th>
+              <th>Con subscripción</th>
+              <th>Imagen</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>34</td>
+              <td>Cliente</td>
+              <td>9.455.847-K</td>
+              <td>Juan</td>
+              <td>Pérez</td>
+              <td>jperez@gmail.com</td>
+              <td>San Juan Bautista 423</td>
+              <td>Si</td>
+              <td>⬛</td>
+            </tr>
+            <tr>
+              <td>35</td>
+              <td>Administrador</td>
+              <td>13.345.678.2</td>
+              <td>Ana</td>
+              <td>Torres</td>
+              <td>atorres@gmail.com</td>
+              <td>San Juan Bautista 423</td>
+              <td>No</td>
+              <td>⬛</td>
+            </tr>
+            <tr>
+              <td>36</td>
+              <td>Cliente</td>
+              <td>26.846.927-K</td>
+              <td>Pedro</td>
+              <td>González</td>
+              <td>pgonzalez@gmail.com</td>
+              <td>San Juan Bautista 423</td>
+              <td>No</td>
+              <td>⬛</td>
+            </tr>
+          </tbody>
+    </table>
+  
+  
+
+
+    <div id="footer">
+
+    </div>
+    
+    <!-- cdn bootstrap -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- cdn jquery tiene que ir antes de js/script.js
+    tiene que leer primero el jquery y despues el js -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.js"
+      integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- cdn jquery validate despues de jquery normal -->
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.10.0/jquery.validate.min.js"></script>
+
+
+    <!-- script archivo js -->
+    <script src="js/script.js"></script>
+    <!-- cdn slick -requiere jquery -->
+    <script
+      type="text/javascript"
+      src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
+    ></script>
+  </body>
+</html>

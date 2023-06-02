@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="img/icon.png" />
+    <title>Mascotas Felices</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"
+    />
+
+    <!-- bootstrap 5.3 css -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+
+    
+    <div id="navbar">
+
+    </div>
+    <!-- titulo -->
+    <h1 class="container">Mis Datos</h1>
+    <br/>
+
+    <!-- formulario de cliente -->
+    <form class="row g-4" method="POST" id="formulario1" novalidate>
+      <div class="container-fluid">
+        <!-- todos los datos del cliente -->
+        <div class="row justify-content-center">
+          <!-- datos del cliente -->
+          <div class="col-sm-12 col-md-4 col-lg-4">
+
+            <!-- rut -->
+            <div class="mb-3">
+              <label for="rut">RUT</label>
+              <input
+                type="text"
+                id="rut"
+                name="rut"
+                class="form-control"
+                placeholder="Escriba su RUT sin puntos y con guion"
+              />
+            </div>
+
+
+
+            <!-- nombre y apellido -->
+            <div class="row">
+              <!-- nombres -->
+              <div class="col mb-3">
+                <label for="name" class="form-label">Nombre</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  aria-describedby="nameHelp"
+                />
+              </div>
+
+              <!-- apellidos -->
+              <div class="col mb-3">
+                <label for="lastname" class="form-label">Apellido</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="lastname"
+                  name="lastname"
+                  aria-describedby="lastnameHelp"
+                />
+              </div>
+            </div>
+
+            <!-- correo -->
+            <div class="mb-3">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-control"
+                placeholder="email.email@email.com"
+                value=""
+                 
+                aria-describedby="emailHelp"
+              />
+            </div>
+
+            <!-- direccion -->
+            <div class="col mb-3">
+              <label for="direccion" class="form-label">Dirección</label>
+              <textarea
+                
+                type="text"
+                placeholder="Ej: Padre Alonso de Ovalle #3421, Santiago Centro."
+                class="form-control"
+                id="direccion"
+                aria-describedby="streetHelp"
+                name="direccion"
+              ></textarea>
+            </div>
+            
+
+
+            <div class="mb-3">
+              <label for="password">Contraseña</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                class="form-control"
+                placeholder="Ingresar contraseña del al menos 5 caracteres"
+                value=""
+                 
+                aria-describedby="password1Help"
+              />
+              
+              
+              <div id="passwordHelp" class="form-text">
+                La contraseña debe tener entre 8 y 20 caracteres, 
+                y que esos caracteres sean letras, números, 
+                el símbolo @ o el guión.
+              </div>
+            </div>
+
+            <div class="mb-3">
+
+              <label for="password2">Repetir Contraseña</label>
+              <input
+                type="password"
+                id="password2"
+                name="password2"
+                class="form-control"
+                placeholder="Repetir contraseña digitada anteriormente"
+                value=""
+                 
+                aria-describedby="password2Help"
+              />
+            </div>
+
+            <div class="mb-3 form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="exampleCheck1"
+              />
+              <label class="form-check-label" for="exampleCheck1">
+                <strong>Subscribirme a la Fundacion</strong>
+              </label>
+              <div id="nevershaverHelp" class="form-text">
+                Deseo subscribirme con un aporte de $ 3.000 mensuales y obtener
+                un 5% de descuento en mis compras.
+              </div>
+            </div>
+          </div>
+
+          <!-- foto cliente -->
+          <div class="col-sm-12 col-md-4 text-center" id="foto">
+            <img class="container-fluid" src="img/fotoperfil.jpg" alt="" />
+            <br />
+            <br />
+            <div>
+              <label for="formFileLg" class="form-label"
+                >Cambiar foto</label
+              >
+              <input
+                class="form-control form-control-lg"
+                id="formFileLg"
+                type="file"
+              />
+            </div>
+          </div>
+        </div>
+        <!-- botones -->
+        <div class="row" id="botones">
+          <div class="col text-center">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="reset" class="btn btn-primary">Limpiar</button>
+          </div>
+      </div>
+      </div>
+    </form>
+
+    <div id="footer">
+
+    </div>
+    
+    
+    <!-- cdn bootstrap -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- cdn jquery tiene que ir antes de js/script.js
+    tiene que leer primero el jquery y despues el js -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.js"
+      integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- cdn jquery validate despues de jquery normal -->
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.10.0/jquery.validate.min.js"></script>
+
+
+    <!-- script archivo js -->
+    <script src="js/script.js"></script>
+    <!-- cdn slick -requiere jquery -->
+    <script
+      type="text/javascript"
+      src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
+    ></script>
+  </body>
+</html>
