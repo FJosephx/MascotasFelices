@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="img/icon.png" />
+    <title>Iniciar Sesion</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"
+    />
+
+    <!-- bootstrap 5.3 css -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body>
+
+    <div id="navbar">
+
+    </div>
+    <h1 class="container">Iniciar Sesion</h1>
+
+    <div class="container-fluid">
+      <br><br>
+
+      <!-- formulario inicar sesion -->
+      <form class="row g-4" method="POST" id="formulario1" novalidate>
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <!-- datos del cliente -->
+            <div class="col-sm-12 col-md-4 col-lg-4">
+  
+              <!-- correo -->
+              <div class="mb-3">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="form-control"
+                  placeholder="Ingrese su email aquí"
+                  value=""
+                  required 
+                />
+              </div>
+
+              <!-- password -->
+              <div class="mb-3">
+                <label for="password">Contraseña</label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  class="form-control"
+                  placeholder="Ingresar contraseña del al menos 5 caracteres"
+                  value=""
+                   
+                  aria-describedby="password1Help"
+                />
+              </div>
+  
+
+              <!-- buton login -->
+              <div class="mb-3">
+                <button type="submit" class="btn btn-primary w-100">Iniciar Sesion</button>
+              </div>
+
+              <!-- not register yet? -->
+              <div class="mb-3 container">
+                No tienes Cuenta? <a href="registro.html" class="text-dark fw-bold"> Registrate Ahora!</a>
+
+              </div>
+            </div>
+  
+          </div>
+
+          <!-- botones -->
+          <div class="row " id="botones">
+
+        </div>
+        </div>
+      </form>
+
+
+      
+
+
+
+
+    <div id="footer">
+
+    </div>
+
+
+    <!-- cdn bootstrap -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- cdn jquery tiene que ir antes de js/script.js
+    tiene que leer primero el jquery y despues el js -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.js"
+      integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- cdn jquery validate despues de jquery normal -->
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.10.0/jquery.validate.min.js"></script>
+
+
+    <!-- script archivo js -->
+    <script src="js/script.js"></script>
+    <!-- cdn slick -requiere jquery -->
+    <script
+      type="text/javascript"
+      src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
+    ></script>
+  </body>
+</html>
