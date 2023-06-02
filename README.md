@@ -1,1 +1,1 @@
-# MascotasFelices
+Rama principial del proyecto
