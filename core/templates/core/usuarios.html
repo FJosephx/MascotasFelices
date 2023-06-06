@@ -52,7 +52,7 @@
             <!-- cliente cliente -->
             <div class="col mb-3">
               <label for="selectUsuario" class="form-label">Tipo de Usuario</label>
-              <select class="custom-select" name="selectUsuario" id="selectUsuario">
+              <select class="custom-select form-control" name="selectUsuario" id="selectUsuario">
                 <option selected></option>
                 <option value="1">Cliente</option>
                 <option value="2">Administrador</option>
@@ -114,7 +114,7 @@
                 class="form-control"
                 placeholder="Ingrese su email aquí"
                 value=""
-                 
+                
                 aria-describedby="emailHelp"
               />
               <div id="emailHelp" class="form-text">Escriba su Email</div>
@@ -124,6 +124,7 @@
             <div class="col mb-3">
               <label for="direccion" class="form-label">Dirección</label>
               <textarea
+              rows="3"
                 type="text"
                 placeholder="Padre Alonso de Ovalle #3123, Santiago Centro."
                 class="form-control"
