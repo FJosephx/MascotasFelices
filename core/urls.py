@@ -1,13 +1,24 @@
 from django.urls import path
-from .views import index, registro,nosotros
+from .views import productos,ventas, usuarios,home, ropa, ficha, misdatos, nosotros, registro, login, administracion, bodega, boleta, miscompras, carrito
 
 
 urlpatterns = [
-    path('', index, name="index"),
-    path('registro', registro, name="registro"),
+    path('', home, name='home'),
+    path('ropa', ropa, name='ropa'),
+    path('ficha', ficha, name='ficha'),
+    path('registro', registro, name='registro'),
+    path('login', login, name='login'),
+    path('administracion', administracion, name='administracion'),
+    path('bodega', bodega, name="bodega"),
+    path('boleta', boleta, name='boleta'),
+    path('carrito', carrito, name="carrito"),
+    path('miscompras', miscompras, name="miscompras"),
+    path('misdatos', misdatos, name="misdatos"),
     path('nosotros', nosotros, name="nosotros"),
-    # path('poblar_bd', poblar_bd, name="poblar_bd"),
-    # path('vehiculo/<action>/<id>', vehiculo, name="vehiculo"),
-    # path('vehiculo_tienda', vehiculo_tienda, name="vehiculo_tienda"),
-    # path('vehiculo_ficha/<id>', vehiculo_ficha, name="vehiculo_ficha"),
+    path('usuarios', usuarios, name="usuarios"),
+    path('productos', productos, name="productos"),
+    path('ventas', ventas, name="ventas"),
+
+
+
 ]
