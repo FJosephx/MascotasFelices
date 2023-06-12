@@ -6,16 +6,16 @@
 <div class="container">
       <div class="row">
         <div class="col-sm">
-          <img style="height: 600px;" src="img/producto_1.png" alt="">
+          <img style="height: 600px;" src="/media/{{ producto.imagenProducto }}" alt="">
         </div>
         <div class="col-sm">
           <br><br>
-          <h1>Lametones Lamb</h1>
+          <h1>{{ producto.nombreProducto }}</h1>
           <h2 class="text-info">Disponible en Bodega</h2>
-          <p>$10.000</p>
+          <p>{{ producto.precioProducto }}</p>
           <p>Descripción:</p>
           <p>
-            Lametones Lamb es una comida para perros de cordero de alta calidad, completa y equilibrada. Libre de granos, es ideal para perros sensibles, económica y fácil de recordar con su nombre divertido.
+            {{ producto.descripcionProducto }}
           </p>
           <a href="registro.html"><button class="btn btn-primary btn-lg">Comprar</button></a>
           <a href="carrito.html"><button class="btn btn-outline-primary btn-lg">Agregar al carrito</button></a>

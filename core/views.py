@@ -3,15 +3,17 @@ from .models import Producto, CategoriaProducto
 from .forms import ProductoForm
 # Create your views here.
 def home(request):
-    data = {'titulo': 'Mascotas Felices'}
+    data = {'titulo': 'Mascotas Felices', 
+            "list": Producto.objects.all().order_by('idProducto'),}
     return render(request, 'core/index.html', data)
 
 def ropa(request):
     data = {'titulo': 'Concurso de Ropa'}
     return render(request, 'core/ropa.html', data)
 
-def ficha(request):
-    data = {'titulo': 'Producto'}
+def ficha(request, id):
+    producto = Producto.objects.get(idProducto=id)
+    data = {'titulo': 'Producto', "producto": producto}
     return render(request, 'core/ficha.html', data)
 
 def registro(request):

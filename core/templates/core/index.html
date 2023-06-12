@@ -28,170 +28,40 @@
 
 <main class="container my-4">
   <h1>Productos Destacados</h1>
+
+
+
+  {% if list %}
   <section class="slick-carousel">
 
     <!-- producto 1 -->
     <div class="card_productos">
-      <section class="p-5 bg-light">
-        <a href="{% url 'ficha' %}">
-          <img src="static/core/img/producto_1.png" class="card-img-top" alt="..." />
+      {% for productos in list %}
+        <section class="p-5 bg-light">
+          <a href="{% url 'ficha' productos.idProducto %}">
+            <img src="/media/{{ productos.imagenProducto }}" class="card-img-top" alt="..." />
 
-          <div class="card-body">
-            <h5 class="card-title">PeluCrunch</h5>
-            <h2>EN OFERTA!</h2>
-            <p>$ 5.000</p>
+            <div class="card-body">
+              <h5 class="card-title">{{ productos.nombreProducto }}</h5>
+              <h2>EN OFERTA!</h2>
+              <p>{{ productos.precioProducto }}</p>
 
-            <p>Descripcion:</p>
-            <p class="card-text">
-              Snack crujiente para perros con pelo suave y brillante.
-            </p>
-          </div>
-        </a>
-      </section>
+              <p>Descripcion:</p>
+              <p class="card-text">
+                {{ productos.descripcionProducto }}
+              </p>
+            </div>
+          </a>
+        </section>
+      {% endfor %}
     </div>
 
-    <!-- producto 2 -->
-    <div class="card_productos">
-      <section class="p-5 bg-light">
-        <a href="templates/core/ficha.html">
-          <img src="static/core/img/producto_2.jfif" class="card-img-top" alt="..." />
 
-          <div class="card-body">
-            <h5 class="card-title">PeluCrunch</h5>
-            <h2>EN OFERTA!</h2>
-            <p>$ 5.000</p>
-
-            <p>Descripcion:</p>
-            <p class="card-text">
-              Snack crujiente para perros con pelo suave y brillante.
-            </p>
-          </div>
-        </a>
-      </section>
-    </div>
-
-    <!-- producto 3 -->
-    <div class="card_productos">
-      <section class="p-5 bg-light">
-        <a href="templates/core/ficha.html">
-          <img src="static/core/img/producto_3.png" class="card-img-top" alt="..." />
-
-          <div class="card-body">
-            <h5 class="card-title">PeluCrunch</h5>
-            <h2>EN OFERTA!</h2>
-            <p>$ 5.000</p>
-
-            <p>Descripcion:</p>
-            <p class="card-text">
-              Snack crujiente para perros con pelo suave y brillante.
-            </p>
-          </div>
-        </a>
-      </section>
-    </div>
-
-    <!-- producto 4 -->
-    <div class="card_productos">
-      <section class="p-5 bg-light">
-        <a href="templates/core/ficha.html">
-          <img src="static/core/img/producto_1.png" class="card-img-top" alt="..." />
-
-          <div class="card-body">
-            <h5 class="card-title">PeluCrunch</h5>
-            <h2>EN OFERTA!</h2>
-            <p>$ 5.000</p>
-
-            <p>Descripcion:</p>
-            <p class="card-text">
-              Snack crujiente para perros con pelo suave y brillante.
-            </p>
-          </div>
-        </a>
-      </section>
-    </div>
-
-    <!-- producto 5 -->
-    <div class="card_productos">
-      <section class="p-5 bg-light">
-        <a href="templates/core/ficha.html">
-          <img src="static/core/img/producto_2.jfif" class="card-img-top" alt="..." />
-
-          <div class="card-body">
-            <h5 class="card-title">PeluCrunch</h5>
-            <h2>EN OFERTA!</h2>
-            <p>$ 5.000</p>
-
-            <p>Descripcion:</p>
-            <p class="card-text">
-              Snack crujiente para perros con pelo suave y brillante.
-            </p>
-          </div>
-        </a>
-      </section>
-    </div>
-
-    <!-- producto 6 -->
-    <div class="card_productos">
-      <section class="p-5 bg-light">
-        <a href="templates/core/ficha.html">
-          <img src="static/core/img/producto_3.png" class="card-img-top" alt="..." />
-
-          <div class="card-body">
-            <h5 class="card-title">PeluCrunch</h5>
-            <h2>EN OFERTA!</h2>
-            <p>$ 5.000</p>
-
-            <p>Descripcion:</p>
-            <p class="card-text">
-              Snack crujiente para perros con pelo suave y brillante.
-            </p>
-          </div>
-        </a>
-      </section>
-    </div>
-
-    <!-- producto 7 -->
-    <div class="card_productos">
-      <section class="p-5 bg-light">
-        <a href="templates/core/ficha.html">
-          <img src="static/core/img/producto_1.png" class="card-img-top" alt="..." />
-
-          <div class="card-body">
-            <h5 class="card-title">PeluCrunch</h5>
-            <h2>EN OFERTA!</h2>
-            <p>$ 5.000</p>
-
-            <p>Descripcion:</p>
-            <p class="card-text">
-              Snack crujiente para perros con pelo suave y brillante.
-            </p>
-          </div>
-        </a>
-      </section>
-    </div>
-
-    <!-- producto 8 -->
-    <div class="card_productos">
-      <section class="p-5 bg-light">
-        <a href="ficha.html">
-          <img src="static/core/img/producto_2.jfif" class="card-img-top" alt="..." />
-
-          <div class="card-body">
-            <h5 class="card-title">PeluCrunch</h5>
-            <h2>EN OFERTA!</h2>
-            <p>$ 5.000</p>
-
-            <p>Descripcion:</p>
-            <p class="card-text">
-              Snack crujiente para perros con pelo suave y brillante.
-            </p>
-          </div>
-        </a>
-      </section>
-    </div>
 
   </section>
-
+  {% else %}
+    <h1>no hay datos</h1>
+  {% endif %}
 
 
 

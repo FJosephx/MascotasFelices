@@ -5,7 +5,7 @@ from .views import productos,ventas, usuarios,home, ropa, ficha, misdatos, nosot
 urlpatterns = [
     path('', home, name='home'),
     path('ropa', ropa, name='ropa'),
-    path('ficha', ficha, name='ficha'),
+    path('ficha/<id>', ficha, name='ficha'),
     path('registro', registro, name='registro'),
     path('login', login, name='login'),
     path('administracion', administracion, name='administracion'),
