@@ -2,184 +2,123 @@
 {% load static %}
 
 {% block content %}
+
+
 <h1 class="container">Mantenedor de Productos</h1>
+<br><br>
 
-<!-- editar productos -->
-<form class="row g-4" method="POST" id="formulario1" novalidate>
-      <div class="container-fluid">
-        <!-- todos los datos del cliente -->
-        <div class="row justify-content-center">
-          <!-- datos del cliente -->
-          <div class="col-sm-12 col-md-4 col-lg-4">
+{% if form %}
+<!-- {{ form.as_p }} -->
+<form class="row g-4" method="POST" action="" enctype="multipart/form-data" id="formulario1">
 
-            <!-- id -->
-            <div class="mb-3">
-              <label for="id_producto">ID del Producto</label>
-              <input
-                type="number"
-                id="id_producto"
-                name="id_producto"
-                class="form-control"
-                placeholder="35"
-                value="" 
-                required
-              />
-            </div>
-
-            <!-- categorias -->
-            <div class="col mb-3">
-              <label for="selectCategoria" class="form-label">Categoría</label>
-              <select class="custom-select" name="selectCategoria" id="selectCategoria">
-                <option selected></option>
-                <option value="1">Perros</option>
-                <option value="2">Gatos</option>
-                <option value="3">Otros</option>
-              </select>
-              <div class="invalid-feedback">Debes seleccionar una opcion</div>
-            </div>              
-            
-            <!-- nombre producto -->
-            <div class="col mb-3">
-              <label for="name" class="form-label">Nombre Producto</label>
-              <input
-                
-                type="text"
-                placeholder="Saco Alimento 10 kg"
-                class="form-control"
-                id="name"
-                name="name"
-                />
-            </div>
-
-            <!-- descripcion producto -->
-            <div class="col mb-3">
-              <label for="descripcion" class="form-label">Descripción del Producto</label>
-              <textarea
-                type="text"
-                placeholder="Alimento para perros"
-                class="form-control"
-                id="descripcion"
-                name="descripcion"
-
-              ></textarea>
-
-            </div>
-            
-            <!-- precio producto -->
-            <div class="col mb-3">
-              <label for="precio" class="form-label">Precio</label>
-              <input
-                type="number"
-                placeholder="8000"
-                class="form-control"
-                id="precio"
-                name="precio"
-
-              />
-
-            </div> 
-
-            <!-- descuento subscriptor -->
-            <div class="col mb-3">
-              <label for="descuento" class="form-label">Descuento Subscriptor</label>
-              <input
-                type="number"
-                placeholder="5%"
-                class="form-control"
-                id="descuento"
-                name="descuento"
-
-              />
-
-            </div>            
-            
-            <!-- descuento por oferta -->
-            <div class="col mb-3">
-              <label for="descuento" class="form-label">Descuento por Oferta</label>
-              <input
-                
-                type="number"
-                placeholder="2%"
-                class="form-control"
-                id="descuento"
-                name="descuento"
-
-              />
-
-            </div>
-            
-          </div>
-
-          <!-- foto cliente -->
-          <div class="col-sm-12 col-md-4 text-center" id="foto">
-            <img class="container-fluid" src="img/producto_1.png" alt="" />
-            <div>
-              <label for="formFileLg" class="form-label"
-                >Cambiar foto</label
-              >
-              <input
-                class="form-control form-control-lg"
-                id="formFileLg"
-                type="file"
-              />
-            </div>
-          </div>
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      {% csrf_token %}
+      <div class="col-sm-12 col-md-4 col-lg-4">
+        <div class="col mb-3">
+          {{ form.idProducto.label_tag }}
+          
+          {{ form.idProducto }}
         </div>
-        <!-- botones -->
-        <div class="row" id="botones">
-          <div class="col text-center">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            <button type="reset" class="btn btn-outline-primary">Nuevo</button>
-            <button type="reset" class="btn btn-danger">Eliminar</button>
+        <div class="col mb-3">
+          {{ form.nombreProducto.label_tag }}
+          {{ form.nombreProducto }}
+        </div>
+        <div class="col mb-3">
+          {{ form.descripcionProducto.label_tag }}
+          {{ form.descripcionProducto }}
+        </div>
+        <div class="col mb-3">
+          {{ form.precioProducto.label_tag }}
+          {{ form.precioProducto }}
+        </div>
+        <div class="col mb-3">
+          {{ form.descuento_subscriptor.label_tag }}
+          {{ form.descuento_subscriptor }}
+        </div>
+        <div class="col mb-3">
+          {{ form.descuento_oferta.label_tag }}
+          {{ form.descuento_oferta }}
+        </div>
 
-          </div>
       </div>
+
+      <div class="col-sm-12 col-md-4 col-lg-4">
+        <div class="col mb-3">
+          {{ form.imagenProducto.label_tag }}
+          {{ form.imagenProducto }}
+          {% if action == 'upd' and imagenProducto_url %}
+          <img src="{{ imagenProducto_url }}" style="height: 400px;" alt="Imagen del producto" class="current-image">
+          {% endif %}
+
+
+        </div>
+        <div class="col mb-3">
+          {{ form.categoriaProducto.label_tag }}
+          {{ form.categoriaProducto }}
+        </div>
       </div>
+
+      
+
+    <div class="row" id="botones">
+      <div class="col text-center">
+        <input type="submit" class="btn btn-primary" id="id_guardar" value="Guardar">
+        <a class="btn btn-outline-primary" href="{% url 'productos' 'ins' -1 %}">Nuevo</a>
+        {% if id != '-1' %}
+        <a class="btn btn-danger" href="{% url 'productos' 'del' id %}">Eliminar</a>
+        {% endif %}
+        {% if mesg %}
+        <div id="form_message" class="alert alert-danger" role="alert">{{ mesg }}</div>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
 </form>
 
-<!-- tabla productos -->
-<table class="container">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Categoria</th>
-          <th>Nombre</th>
-          <th>Descripcion</th>
-          <th>Precio</th>
-          <th>% Desc. Subscriptor</th>
-          <th>% Desc. Oferta</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>423</td>
-          <td>Gato</td>
-          <td>Saco Alimento Royal Canin</td>
-          <td>Alimento de perros 3kg</td>
-          <td>$15.000</td>
-          <td>2%</td>
-          <td>5%</td>
-        </tr>
-        <tr>
-          <td>423</td>
-          <td>Gato</td>
-          <td>Saco Alimento Royal Canin</td>
-          <td>Alimento de perros 3kg</td>
-          <td>$15.000</td>
-          <td>2%</td>
-          <td>5%</td>
-        </tr>
-        <tr>
-          <td>423</td>
-          <td>Gato</td>
-          <td>Saco Alimento Royal Canin</td>
-          <td>Alimento de perros 3kg</td>
-          <td>$15.000</td>
-          <td>2%</td>
-          <td>5%</td>
-        </tr>
 
-      </tbody>
+{% endif %}
+
+{% if list %}
+<table class="container">
+  <thead>
+    <tr>
+        <th>ID</th>
+        <th>Categoria</th>
+        <th>Nombre</th>
+        <th>Descripcion</th>
+        <th>Precio</th>
+        <th>% Desc. Subscriptor</th>
+        <th>% Desc. Oferta</th>
+        <th>Imagen</th>
+        <th>Editar</th>
+        <th>Eliminar</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for producto in list %}
+    <tr>
+        <td>{{ producto.idProducto }}</td>
+        <td>{{ producto.categoriaProducto }}</td>
+        <td>{{ producto.nombreProducto }}</td>
+        <td>{{ producto.descripcionProducto }}</td>
+        <td>{{ producto.precioProducto }}</td>
+        <td>{{ producto.descuento_subscriptor }}</td>
+        <td>{{ producto.descuento_oferta }}</td>
+        <td><img src="/media/{{ producto.imagenProducto }}" style="height: 150px;" alt=""></td>
+        
+
+        <td><a href="{% url 'productos' 'upd' producto.idProducto %}" 
+            class="btn btn-primary btn-sm">Editar</a></td>
+        <td><a href="{% url 'productos' 'del' producto.idProducto %}" 
+            class="btn btn-danger btn-sm">Eliminar</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
 </table>
 
+{% endif %}
+
 {% endblock %}   
+

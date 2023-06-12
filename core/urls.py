@@ -16,7 +16,9 @@ urlpatterns = [
     path('misdatos', misdatos, name="misdatos"),
     path('nosotros', nosotros, name="nosotros"),
     path('usuarios', usuarios, name="usuarios"),
-    path('productos', productos, name="productos"),
+    # path('productos', productos, name="productos"),
+    path('productos/<action>/<id>', productos, name="productos"),
+
     path('ventas', ventas, name="ventas"),
 
 
