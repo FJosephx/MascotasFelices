@@ -1,5 +1,5 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
-
+import locale
 from django.db import models
 
 
@@ -9,11 +9,23 @@ class CategoriaProducto(models.Model):
     nombreCategoria = models.CharField(max_length=80, blank=False, null=False, verbose_name="Nombre de la categoría")
     def __str__(self):
         return self.nombreCategoria
+    
 
 
 # Create Modelo para Productos
 class Producto(models.Model):
+
+    DISPONIBILIDAD_CHOICES = (
+        ('1', 'Disponible en bodega'),
+        ('2', 'Agotado'),
+        ('3', 'En oferta'),
+    )
+
+    disponibilidadProducto = models.CharField(max_length=1, choices=DISPONIBILIDAD_CHOICES, default='1', verbose_name="Disponibilidad")
+
     idProducto = models.CharField(max_length=6, primary_key=True, verbose_name="ID Producto")
+    cantidadProducto = models.IntegerField(default=1, verbose_name="Cantidad Producto")
+
     nombreProducto = models.CharField(max_length=80, blank=False, null=False, verbose_name="Nombre Producto")
     descripcionProducto = models.CharField(max_length=80, null=True, blank=True, verbose_name="Descripcion Producto")
     
@@ -23,8 +35,10 @@ class Producto(models.Model):
 
     imagenProducto = models.ImageField(upload_to="images/", default="sinfoto.jpg", null=False, blank=False, verbose_name="Imagen Producto")
     
+
     categoriaProducto = models.ForeignKey(CategoriaProducto, on_delete=models.DO_NOTHING, verbose_name="Categoria Producto")
 
 
     def __str__(self):
         return self.nombreProducto
+

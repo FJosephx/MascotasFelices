@@ -273,7 +273,6 @@ $(document).ready(function(){
 
 
 
-// script titulo typing efect
 document.addEventListener('DOMContentLoaded',function(event){
 
 function generarCodigoAleatorio() {

@@ -4,13 +4,16 @@ from .models import Producto, CategoriaProducto
 from django.forms.widgets import ClearableFileInput
 
 
+
 class ProductoForm(ModelForm):
 
     imagenProducto = forms.ImageField(
         label = "Imagen de Producto",
         required=False,
-        widget=ClearableFileInput(attrs={"class": "form-control form-control-sm"}),
+        widget=ClearableFileInput(attrs={"class": "form-control form-control"}),
     )
+
+    
 
 
     categoriaProducto = forms.ModelChoiceField(
@@ -31,6 +34,8 @@ class ProductoForm(ModelForm):
                   'descuento_oferta', 
                   'imagenProducto', 
                   'categoriaProducto', 
+                  'disponibilidadProducto',
+                  'cantidadProducto'
                   ]
 
         widgets = {
@@ -40,6 +45,9 @@ class ProductoForm(ModelForm):
             'precioProducto': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': '$ 45.000'}),
             'descuento_subscriptor': forms.NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 100}),
             'descuento_oferta': forms.NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 100,}),
+            'cantidadProducto': forms.NumberInput(attrs={'class': 'form-control'}),
+            'disponibilidadProducto': forms.Select(attrs={'class': 'form-select'}),
+
 
         } 
 

@@ -1,4 +1,6 @@
 
+
+
 #precio {
   outline: black solid 3px;
 }
@@ -12,9 +14,6 @@
   
 }
 
-.star {
-  color: #f9c542;
-}
 
 .card_productos{
   padding: 15px;

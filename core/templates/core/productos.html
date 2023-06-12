@@ -7,31 +7,77 @@
 <h1 class="container">Mantenedor de Productos</h1>
 <br><br>
 
-{% if form %}
-<!-- {{ form.as_p }} -->
-<form class="row g-4" method="POST" action="" enctype="multipart/form-data" id="formulario1">
 
-  <div class="container-fluid">
-    <div class="row justify-content-center">
-      {% csrf_token %}
-      <div class="col-sm-12 col-md-4 col-lg-4">
+  <!-- {{ form.as_p }} -->
+
+  <!-- carga imagen del producto al editar -->
+  <!-- <div class="container">
+    {% if action == 'upd' and imagenProducto_url %}
+    <img  src="{{ imagenProducto_url }}" style="height: 200px;" alt="Imagen del producto" class="current-image">
+    {% endif %}
+  </div> -->
+
+
+{% if form %}
+<form class="row g-4" method="POST" enctype="multipart/form-data" id="formulario1" novalidate>
+      <!-- todos los datos del cliente -->
+  <div class="row justify-content-center">
+    <div class="col-sm-12 col-md-4 col-lg-4">
+          {% csrf_token %}
+
+      <div class="mb-3">
+            {{ form.idProducto.label_tag }}
+            
+            {{ form.idProducto }}
+      </div>
+      <div class="mb-3">
+            {{ form.nombreProducto.label_tag }}
+            {{ form.nombreProducto }}
+      </div>
+      <div class="mb-3">
+            {{ form.descripcionProducto.label_tag }}
+            {{ form.descripcionProducto }}
+      </div>
+      <div class="mb-3">
+            {{ form.precioProducto.label_tag }}
+            {{ form.precioProducto }}
+      </div>
+      
+
+      
+      <div class="col mb-3">
+            {{ form.cantidadProducto.label_tag }}
+            {{ form.cantidadProducto }}
+      </div>
+      
+    </div>
+      
+    <div class="col-sm-12 col-md-4 col-lg-4">
+                
+      <div class="col mb-3">
+      
+      
+        {% if form.imagenProducto.value %}
+          <label for="{{ form.imagenProducto.id_for_label }}">Archivo seleccionado</label>
+        {% else %}
+          <label for="{{ form.imagenProducto.id_for_label }}">Seleccionar archivo</label>
+        {% endif %}
+        {{ form.imagenProducto }}
+
+      </div>
+
+      <div class="row">
         <div class="col mb-3">
-          {{ form.idProducto.label_tag }}
-          
-          {{ form.idProducto }}
+              {{ form.categoriaProducto.label_tag }}
+              {{ form.categoriaProducto }}
         </div>
         <div class="col mb-3">
-          {{ form.nombreProducto.label_tag }}
-          {{ form.nombreProducto }}
+              {{ form.disponibilidadProducto.label_tag }}
+              {{ form.disponibilidadProducto }}
         </div>
-        <div class="col mb-3">
-          {{ form.descripcionProducto.label_tag }}
-          {{ form.descripcionProducto }}
-        </div>
-        <div class="col mb-3">
-          {{ form.precioProducto.label_tag }}
-          {{ form.precioProducto }}
-        </div>
+      </div>
+
+      <div class="row">
         <div class="col mb-3">
           {{ form.descuento_subscriptor.label_tag }}
           {{ form.descuento_subscriptor }}
@@ -40,72 +86,65 @@
           {{ form.descuento_oferta.label_tag }}
           {{ form.descuento_oferta }}
         </div>
-
       </div>
-
-      <div class="col-sm-12 col-md-4 col-lg-4">
-        <div class="col mb-3">
-          {{ form.imagenProducto.label_tag }}
-          {{ form.imagenProducto }}
-          {% if action == 'upd' and imagenProducto_url %}
-          <img src="{{ imagenProducto_url }}" style="height: 400px;" alt="Imagen del producto" class="current-image">
-          {% endif %}
-
-
-        </div>
-        <div class="col mb-3">
-          {{ form.categoriaProducto.label_tag }}
-          {{ form.categoriaProducto }}
-        </div>
-      </div>
-
       
-
-    <div class="row" id="botones">
-      <div class="col text-center">
-        <input type="submit" class="btn btn-primary" id="id_guardar" value="Guardar">
-        <a class="btn btn-outline-primary" href="{% url 'productos' 'ins' -1 %}">Nuevo</a>
-        {% if id != '-1' %}
-        <a class="btn btn-danger" href="{% url 'productos' 'del' id %}">Eliminar</a>
-        {% endif %}
-        {% if mesg %}
-        <div id="form_message" class="alert alert-danger" role="alert">{{ mesg }}</div>
-        {% endif %}
-      </div>
     </div>
+      
+    <div class="row" id="botones">
+          <div class="col text-center">
+            <input type="submit" class="btn btn-primary" id="id_guardar" value="Guardar">
+            <a class="btn btn-outline-primary" href="{% url 'productos' 'ins' -1 %}">Nuevo</a>
+            {% if id != '-1' %}
+            <a class="btn btn-danger" href="{% url 'productos' 'del' id %}">Eliminar</a>
+            {% endif %}
+            {% if mesg %}
+            
+              {% if mesg_class == 'success' %}
+                <div id="form_message" class="alert alert-success" role="alert">{{ mesg }}</div>
+              {% elif mesg_class == 'error' %}
+                <div id="form_message" class="alert alert-danger" role="alert">{{ mesg }}</div>
+              {% elif mesg_class == 'ins' %}
+                <div id="form_message" class="alert alert-primary" role="alert">{{ mesg }}</div>
+              {% else %}
+                <div id="form_message" class="alert alert-info" role="alert">{{ mesg }}</div>
+              {% endif %}
 
+            {% endif %}
+          </div>
+    </div>
+        
   </div>
+
 </form>
-
-
 {% endif %}
 
+
 {% if list %}
-<table class="container">
+<table class="container table table-sm table-hover">
   <thead>
     <tr>
         <th>ID</th>
         <th>Categoria</th>
         <th>Nombre</th>
-        <th>Descripcion</th>
+        <!-- <th>Descripcion</th> -->
         <th>Precio</th>
-        <th>% Desc. Subscriptor</th>
-        <th>% Desc. Oferta</th>
+        <th>Subscriptor</th>
+        <th>Oferta</th>
         <th>Imagen</th>
         <th>Editar</th>
         <th>Eliminar</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="table-group-divider">
     {% for producto in list %}
     <tr>
         <td>{{ producto.idProducto }}</td>
         <td>{{ producto.categoriaProducto }}</td>
         <td>{{ producto.nombreProducto }}</td>
-        <td>{{ producto.descripcionProducto }}</td>
-        <td>{{ producto.precioProducto }}</td>
-        <td>{{ producto.descuento_subscriptor }}</td>
-        <td>{{ producto.descuento_oferta }}</td>
+        <!-- <td>{{ producto.descripcionProducto }}</td> -->
+        <td>$ {{ producto.precioProducto }}</td>
+        <td>{{ producto.descuento_subscriptor }} %</td>
+        <td>{{ producto.descuento_oferta }} %</td>
         <td><img src="/media/{{ producto.imagenProducto }}" style="height: 150px;" alt=""></td>
         
 
@@ -119,6 +158,8 @@
 </table>
 
 {% endif %}
+
+
 
 {% endblock %}   
 

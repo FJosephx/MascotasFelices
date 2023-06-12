@@ -33,29 +33,40 @@
 
   {% if list %}
   <section class="slick-carousel">
-
+    {% for productos in list %}
     <!-- producto 1 -->
     <div class="card_productos">
-      {% for productos in list %}
-        <section class="p-5 bg-light">
+      
+      <section class="p-5">
           <a href="{% url 'ficha' productos.idProducto %}">
             <img src="/media/{{ productos.imagenProducto }}" class="card-img-top" alt="..." />
 
             <div class="card-body">
-              <h5 class="card-title">{{ productos.nombreProducto }}</h5>
-              <h2>EN OFERTA!</h2>
-              <p>{{ productos.precioProducto }}</p>
+              
+              <h4 class="mt-4 fw-6">EN OFERTA!</h4>
+              
+              <h3>{{ productos.nombreProducto }}</h3>
 
-              <p>Descripcion:</p>
-              <p class="card-text">
-                {{ productos.descripcionProducto }}
-              </p>
+
+              {% if productos.categoriaProducto.nombreCategoria == 'Perro' %}
+              <h6 class="mt-0 " style="color: green;">{{ productos.categoriaProducto.nombreCategoria }}</h6>
+              {% elif productos.categoriaProducto.nombreCategoria == 'Gato' %}
+              <h6 class="mt-0 " style="color: red;">{{ productos.categoriaProducto.nombreCategoria }}</h6>
+              {% elif productos.categoriaProducto.nombreCategoria == 'Otros' %}
+              <h6 class="mt-0 " style="color: yellow;">{{ productos.categoriaProducto.nombreCategoria }}</h6>
+              {% else %}
+              <h6 class="mt-0 ">{{ productos.categoriaProducto.nombreCategoria }}</h6>
+              {% endif %}
+
+              <h2 class="fw-1">$ {{ productos.precioProducto }}</h2>
             </div>
           </a>
-        </section>
-      {% endfor %}
-    </div>
+      </section>
 
+
+      
+    </div>
+    {% endfor %}
 
 
   </section>
