@@ -1,1 +1,2 @@
-Rama del proyecto de Franco.
+Rama principial del proyecto
+V2.0
