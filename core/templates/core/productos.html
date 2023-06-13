@@ -25,10 +25,17 @@
     <div class="col-sm-12 col-md-4 col-lg-4">
           {% csrf_token %}
 
-      <div class="mb-3">
-            {{ form.idProducto.label_tag }}
-            
-            {{ form.idProducto }}
+      <div class="row">
+        <div class="col mb-3">
+          {{ form.idProducto.label_tag }}
+          
+          {{ form.idProducto }}
+        </div>
+        <div class="col mb-3">
+          {{ form.cantidadProducto.label_tag }}
+          {{ form.cantidadProducto }}
+        </div>
+        
       </div>
       <div class="mb-3">
             {{ form.nombreProducto.label_tag }}
@@ -45,10 +52,7 @@
       
 
       
-      <div class="col mb-3">
-            {{ form.cantidadProducto.label_tag }}
-            {{ form.cantidadProducto }}
-      </div>
+
       
     </div>
       
@@ -92,22 +96,26 @@
       
     <div class="row" id="botones">
           <div class="col text-center">
-            <input type="submit" class="btn btn-primary" id="id_guardar" value="Guardar">
+            <input type="submit" class="btn btn-primary"  value="Guardar">
             <a class="btn btn-outline-primary" href="{% url 'productos' 'ins' -1 %}">Nuevo</a>
             {% if id != '-1' %}
             <a class="btn btn-danger" href="{% url 'productos' 'del' id %}">Eliminar</a>
             {% endif %}
+            
             {% if mesg %}
             
+            <div class="container">
               {% if mesg_class == 'success' %}
-                <div id="form_message" class="alert alert-success" role="alert">{{ mesg }}</div>
+              <div id="form_message" class="alert alert-success" role="alert">{{ mesg }}</div>
               {% elif mesg_class == 'error' %}
-                <div id="form_message" class="alert alert-danger" role="alert">{{ mesg }}</div>
+              <div id="form_message" class="alert alert-danger" role="alert">{{ mesg }}</div>
               {% elif mesg_class == 'ins' %}
-                <div id="form_message" class="alert alert-primary" role="alert">{{ mesg }}</div>
+              <div id="form_message" class="alert alert-primary" role="alert">{{ mesg }}</div>
               {% else %}
-                <div id="form_message" class="alert alert-info" role="alert">{{ mesg }}</div>
+              <div id="form_message" class="alert alert-info" role="alert">{{ mesg }}</div>
               {% endif %}
+            </div>
+
 
             {% endif %}
           </div>
@@ -117,6 +125,8 @@
 
 </form>
 {% endif %}
+
+
 
 
 {% if list %}

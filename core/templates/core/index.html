@@ -7,13 +7,13 @@
 <div id="carouselExampleInterval" class="carousel slide container" data-bs-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active" data-bs-interval="2000">
-      <img src="static/core/img/home_1.jpg" class="d-block w-100" alt="...">
+      <img src="{% static 'core/img/images/home/banner-1.jpg' %}" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item" data-bs-interval="6000">
-      <img src="static/core/img/home_2.jpg" class="d-block w-100" alt="...">
+      <img src="{% static 'core/img/images/home/banner-2.png' %}" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item" data-bs-interval="10000">
-      <img src="static/core/img/home_2.jpg" class="d-block w-100" alt="...">
+      <img src="{% static 'core/img/images/home/banner-1.jpg' %}" class="d-block w-100" alt="...">
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
@@ -117,6 +117,31 @@
     </div>
   </div>
 </div>
+
+
+<div class="container">
+  <h1 class="text-start">Nuestras Marcas</h1>
+  <div class="row row-cols-4">
+    <div class="col">
+      <img src="{% static 'core/img/images/brands/hills.jpg' %}" style="height: 200px;" alt="">
+    </div>
+    <div class="col">
+      <img src="{% static 'core/img/images/brands/nutra_nuggets.jpg' %}" style="height: 200px;" alt="">
+
+    </div>
+    <div class="col">
+      <img src="{% static 'core/img/images/brands/purina_pro_plan.png' %}" style="height: 200px;" alt="">
+
+    </div>
+    <div class="col">
+      <img src="{% static 'core/img/images/brands/royal_canin.jpg' %}" style="height: 200px;" alt="">
+
+    </div>
+  </div>
+</div>
+
+
+
 
 {% endblock %}
 

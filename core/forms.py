@@ -10,7 +10,7 @@ class ProductoForm(ModelForm):
     imagenProducto = forms.ImageField(
         label = "Imagen de Producto",
         required=False,
-        widget=ClearableFileInput(attrs={"class": "form-control form-control"}),
+        widget=ClearableFileInput(attrs={"class": "form-control form-control-sm"}),
     )
 
     
@@ -21,7 +21,7 @@ class ProductoForm(ModelForm):
         empty_label=None,
         label="Categoría",
 
-        widget=forms.Select(attrs={"class": "form-select"}),)
+        widget=forms.Select(attrs={"class": "form-select form-control-sm"}),)
     
 
     class Meta:
@@ -39,14 +39,14 @@ class ProductoForm(ModelForm):
                   ]
 
         widgets = {
-            'idProducto': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el ID del producto'}),
-            'nombreProducto': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el Nombre del producto'}),
-            'descripcionProducto': forms.Textarea(attrs={'class': 'form-control', 'rows': 2, 'placeholder': 'Ingrese una descripcion breve del producto'}),
-            'precioProducto': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': '$ 45.000'}),
-            'descuento_subscriptor': forms.NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 100}),
-            'descuento_oferta': forms.NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 100,}),
-            'cantidadProducto': forms.NumberInput(attrs={'class': 'form-control'}),
-            'disponibilidadProducto': forms.Select(attrs={'class': 'form-select'}),
+            'idProducto': forms.NumberInput(attrs={'class': 'form-control form-control-sm', 'placeholder': 'Ingrese el ID del producto'}),
+            'nombreProducto': forms.TextInput(attrs={'class': 'form-control form-control-sm', 'placeholder': 'Ingrese el Nombre del producto'}),
+            'descripcionProducto': forms.Textarea(attrs={'class': 'form-control form-control-sm', 'rows': 2, 'placeholder': 'Ingrese una descripcion breve del producto'}),
+            'precioProducto': forms.NumberInput(attrs={'class': 'form-control form-control-sm', 'placeholder': '$ 45.000'}),
+            'descuento_subscriptor': forms.NumberInput(attrs={'class': 'form-control form-control-sm', 'min': 1, 'max': 100}),
+            'descuento_oferta': forms.NumberInput(attrs={'class': 'form-control form-control-sm', 'min': 1, 'max': 100,}),
+            'cantidadProducto': forms.NumberInput(attrs={'class': 'form-control form-control-sm'}),
+            'disponibilidadProducto': forms.Select(attrs={'class': 'form-select form-control-sm'}),
 
 
         } 
