@@ -25,18 +25,12 @@
     <div class="col-sm-12 col-md-4 col-lg-4">
           {% csrf_token %}
 
-      <div class="row">
-        <div class="col mb-3">
-          {{ form.idProducto.label_tag }}
-          
-          {{ form.idProducto }}
-        </div>
-        <div class="col mb-3">
-          {{ form.cantidadProducto.label_tag }}
-          {{ form.cantidadProducto }}
-        </div>
-        
+      <div class="col mb-3">
+        {{ form.cantidadProducto.label_tag }}
+        {{ form.cantidadProducto }}
       </div>
+        
+
       <div class="mb-3">
             {{ form.nombreProducto.label_tag }}
             {{ form.nombreProducto }}
@@ -148,7 +142,7 @@
   <tbody class="table-group-divider">
     {% for producto in list %}
     <tr>
-        <td>{{ producto.idProducto }}</td>
+        <td>{{ producto.id }}</td>
         <td>{{ producto.categoriaProducto }}</td>
         <td>{{ producto.nombreProducto }}</td>
         <!-- <td>{{ producto.descripcionProducto }}</td> -->
@@ -158,9 +152,9 @@
         <td><img src="/media/{{ producto.imagenProducto }}" style="height: 150px;" alt=""></td>
         
 
-        <td><a href="{% url 'productos' 'upd' producto.idProducto %}" 
+        <td><a href="{% url 'productos' 'upd' producto.id %}" 
             class="btn btn-primary btn-sm">Editar</a></td>
-        <td><a href="{% url 'productos' 'del' producto.idProducto %}" 
+        <td><a href="{% url 'productos' 'del' producto.id %}" 
             class="btn btn-danger btn-sm">Eliminar</a></td>
     </tr>
     {% endfor %}

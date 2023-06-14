@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
-from .models import Producto, CategoriaProducto
+from .models import Producto
 from .forms import ProductoForm
 import locale
 # Create your views here.
 def home(request):
     data = {'titulo': 'Mascotas Felices', 
-            "list": Producto.objects.all().order_by('idProducto'),}
+            "list": Producto.objects.all().order_by('id'),}
     return render(request, 'core/index.html', data)
 
 def ropa(request):
@@ -13,7 +13,7 @@ def ropa(request):
     return render(request, 'core/ropa.html', data)
 
 def ficha(request, id):
-    producto = Producto.objects.get(idProducto=id)
+    producto = Producto.objects.get(id=id)
 
 
     data = {'titulo': producto.nombreProducto, 
@@ -94,7 +94,7 @@ def productos(request, action, id):
                     data["mesg"] = "¡No se pueden crear dos productos con el mismo id!"
                     data["mesg_class"] = "ins"
     elif action == 'upd':
-        objeto = Producto.objects.get(idProducto=id)
+        objeto = Producto.objects.get(id=id)
         if request.method == "POST":
             form = ProductoForm(data=request.POST, files=request.FILES, instance=objeto)
             if form.is_valid:
@@ -108,7 +108,7 @@ def productos(request, action, id):
 
     elif action == 'del':
         try:
-            Producto.objects.get(idProducto=id).delete()
+            Producto.objects.get(id=id).delete()
             data["mesg"] = "¡El Producto fue eliminado correctamente!"
             data["mesg_class"] = "error"
 
@@ -118,7 +118,7 @@ def productos(request, action, id):
             data["mesg_class"] = "error"
     
 
-    data["list"] = Producto.objects.all().order_by('idProducto')
+    data["list"] = Producto.objects.all().order_by('id')
 
 
     return render(request, 'core/productos.html',data)

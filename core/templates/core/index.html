@@ -30,7 +30,7 @@
   <h1>Productos Destacados</h1>
 
 
-
+  <!-- la iteracion del list esta realcionada al list de views.py def productos -->
   {% if list %}
   <section class="slick-carousel">
     {% for productos in list %}
@@ -38,7 +38,7 @@
     <div class="card_productos">
       
       <section class="p-5">
-          <a href="{% url 'ficha' productos.idProducto %}">
+          <a href="{% url 'ficha' productos.id %}">
             <img src="/media/{{ productos.imagenProducto }}" class="card-img-top" alt="..." />
 
             <div class="card-body">

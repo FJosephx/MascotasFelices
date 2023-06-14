@@ -5,7 +5,6 @@ from django.db import models
 
 # Create your models here
 class CategoriaProducto(models.Model):
-    idCategoria = models.IntegerField(primary_key=True, verbose_name="Id de categoría")
     nombreCategoria = models.CharField(max_length=80, blank=False, null=False, verbose_name="Nombre de la categoría")
     def __str__(self):
         return self.nombreCategoria
@@ -23,7 +22,6 @@ class Producto(models.Model):
 
     disponibilidadProducto = models.CharField(max_length=1, choices=DISPONIBILIDAD_CHOICES, default='1', verbose_name="Disponibilidad")
 
-    idProducto = models.CharField(max_length=6, primary_key=True, verbose_name="ID Producto")
     cantidadProducto = models.IntegerField(default=1, verbose_name="Cantidad Producto")
 
     nombreProducto = models.CharField(max_length=80, blank=False, null=False, verbose_name="Nombre Producto")
