@@ -1,68 +1,81 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
+{% load custom_filters %}
+
 {% block content %}
 
 
-<h1 class="container">Mantenedor de Productos</h1>
-<br><br>
 
+{% if form.nombreProducto.value %}
+<div class="container text-info py-3">
+  <div class="row">
+    <div class="col text-end">
+      <h1>{{ form.nombreProducto.value }}</h1>
 
-  <!-- {{ form.as_p }} -->
+    </div>
+    <div class="col text-start">
+      <img style="height: 200px;" id="imagen-producto" src="/media/{{ form.imagenProducto.value }}" alt="Vista previa de la imagen">
+    
+    </div>
 
-  <!-- carga imagen del producto al editar -->
-  <!-- <div class="container">
-    {% if action == 'upd' and imagenProducto_url %}
-    <img  src="{{ imagenProducto_url }}" style="height: 200px;" alt="Imagen del producto" class="current-image">
-    {% endif %}
-  </div> -->
+  </div>
 
+</div>
+{% else %}
+<div class="container text-center py-3">
+  <h1>Mantenedor de Productos</h1>
+</div>
+{% endif %}
 
 {% if form %}
-<form class="row g-4" method="POST" enctype="multipart/form-data" id="formulario1" novalidate>
+<form class="row py-4 g-4" method="POST" enctype="multipart/form-data" id="formulario1" novalidate>
       <!-- todos los datos del cliente -->
   <div class="row justify-content-center">
     <div class="col-sm-12 col-md-4 col-lg-4">
-          {% csrf_token %}
+      {% csrf_token %}
 
       <div class="col mb-3">
         {{ form.cantidadProducto.label_tag }}
         {{ form.cantidadProducto }}
       </div>
-        
 
       <div class="mb-3">
             {{ form.nombreProducto.label_tag }}
             {{ form.nombreProducto }}
       </div>
+
       <div class="mb-3">
             {{ form.descripcionProducto.label_tag }}
             {{ form.descripcionProducto }}
       </div>
+
       <div class="mb-3">
             {{ form.precioProducto.label_tag }}
             {{ form.precioProducto }}
       </div>
       
-
-      
-
       
     </div>
       
     <div class="col-sm-12 col-md-4 col-lg-4">
-                
-      <div class="col mb-3">
-      
-      
-        {% if form.imagenProducto.value %}
-          <label for="{{ form.imagenProducto.id_for_label }}">Archivo seleccionado</label>
-        {% else %}
-          <label for="{{ form.imagenProducto.id_for_label }}">Seleccionar archivo</label>
-        {% endif %}
-        {{ form.imagenProducto }}
 
+      <!-- <div class="col mb-3">
+        {% if form.imagenProducto.value %}
+        <img style="height: 200px;" id="imagen-producto" src="/media/{{ form.imagenProducto.value }}" alt="Vista previa de la imagen">
+        <input type="hidden" name="nombre_archivo" value="{{ form.imagenProducto.value }}">
+        {% else %}
+        <img id="imagen-producto" src="{% static 'core/images/sin-imagen.png' %}" alt="Vista previa de la imagen">
+        <input type="hidden" name="nombre_archivo" name="id_nombre_archivo" value="">
+        {% endif %}
+      </div> -->
+
+      <div class="col mb-3">
+
+        {{ form.imagenProducto.label_tag }}
+        {{ form.imagenProducto }}
       </div>
+                
 
       <div class="row">
         <div class="col mb-3">
@@ -90,8 +103,20 @@
       
     <div class="row" id="botones">
           <div class="col text-center">
-            <input type="submit" class="btn btn-primary"  value="Guardar">
+
+            {% if id != '-1' %}
+            <input type="submit" class="btn btn-primary"  value="Actualizar Producto">
             <a class="btn btn-outline-primary" href="{% url 'productos' 'ins' -1 %}">Nuevo</a>
+
+            {% else %}
+            <input type="submit" class="btn btn-primary"  value="Agregar Producto">
+
+            <a class="btn btn-outline-primary" href="{% url 'productos' 'ins' -1 %}">Nuevo</a>
+
+            {% endif %}
+
+
+            
             {% if id != '-1' %}
             <a class="btn btn-danger" href="{% url 'productos' 'del' id %}">Eliminar</a>
             {% endif %}
@@ -146,16 +171,20 @@
         <td>{{ producto.categoriaProducto }}</td>
         <td>{{ producto.nombreProducto }}</td>
         <!-- <td>{{ producto.descripcionProducto }}</td> -->
-        <td>$ {{ producto.precioProducto }}</td>
-        <td>{{ producto.descuento_subscriptor }} %</td>
-        <td>{{ producto.descuento_oferta }} %</td>
+        <td>{{ producto.precioProducto|formatear_dinero }}</td>
+        <td>{{ producto.descuento_subscriptor|formatear_porcentaje }}</td>
+        <td>{{ producto.descuento_oferta|formatear_porcentaje }}</td>
         <td><img src="/media/{{ producto.imagenProducto }}" style="height: 150px;" alt=""></td>
         
 
-        <td><a href="{% url 'productos' 'upd' producto.id %}" 
-            class="btn btn-primary btn-sm">Editar</a></td>
-        <td><a href="{% url 'productos' 'del' producto.id %}" 
-            class="btn btn-danger btn-sm">Eliminar</a></td>
+        <td>
+          <a href="{% url 'productos' 'upd' producto.id %}" class="btn btn-primary btn-lg"><i class="bi bi-tools"></i>
+          </a>
+        </td>
+        <td>
+          <a href="{% url 'productos' 'del' producto.id %}" class="btn btn-danger btn-lg"><i class="bi bi-trash3-fill"></i>
+          </a>
+        </td>
     </tr>
     {% endfor %}
   </tbody>

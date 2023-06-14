@@ -1,6 +1,6 @@
 {% extends 'core/base.html' %}
 {% load static %}
-
+{% load custom_filters %}
 {% block content %}
 
 <div class="container">
@@ -23,7 +23,7 @@
           <h6 class="fs-3 fw-bold">{{ producto.get_disponibilidadProducto_display }}</h6>
           {% endif %}
           
-          <p class="fs-4 fw-medium mt-4">$ {{ producto.precioProducto }}</p>
+          <p class="fs-4 fw-medium mt-4">{{ producto.precioProducto|formatear_dinero }}</p>
           <p class="fs-6 fw-bold mb-1">DESCRIPCION</p>
           <p class="fs-6 fw-normal">
             {{ producto.descripcionProducto }}

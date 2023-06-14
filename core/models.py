@@ -20,7 +20,7 @@ class Producto(models.Model):
         ('3', 'En oferta'),
     )
 
-    disponibilidadProducto = models.CharField(max_length=1, choices=DISPONIBILIDAD_CHOICES, default='1', verbose_name="Disponibilidad")
+    disponibilidadProducto = models.CharField(max_length=1, choices=DISPONIBILIDAD_CHOICES, verbose_name="Disponibilidad")
 
     cantidadProducto = models.IntegerField(default=1, verbose_name="Cantidad Producto")
 
