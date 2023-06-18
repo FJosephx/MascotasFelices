@@ -9,6 +9,12 @@ import locale
 #             "list": Producto.objects.all().order_by('id'),}
 #     return render(request, 'core/index.html', data)
 
+
+# def home(request):
+#     data = {'titulo': 'Mascotas Felices', 
+#             "list": Producto.objects.all().order_by('id'),}
+#     return render(request, 'core/index.html', data)
+
 def home(request):
      resultado=''
      
