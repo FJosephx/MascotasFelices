@@ -3,10 +3,50 @@ from .models import Producto
 from .forms import ProductoForm
 import locale
 # Create your views here.
+
+# def home(request):
+#     data = {'titulo': 'Mascotas Felices', 
+#             "list": Producto.objects.all().order_by('id'),}
+#     return render(request, 'core/index.html', data)
+
 def home(request):
-    data = {'titulo': 'Mascotas Felices', 
-            "list": Producto.objects.all().order_by('id'),}
-    return render(request, 'core/index.html', data)
+     resultado=''
+     
+     list = Producto.objects.all().order_by('nombreProducto')
+     if request.method == 'POST':
+         buscar = request.POST.get('buscar')
+         if buscar.strip() != '':
+             resultado = buscar
+             list = Producto.objects.filter(nombreProducto__icontains=buscar).order_by('nombreProducto')
+             
+     data = { 
+         'titulo': 'Mascotas Felices', 
+         'list': list,
+         'resultado': resultado
+     }
+     return render(request, 'core/index.html', data)
+
+
+# def index(request):
+    # conseguir productos
+    # productos = Producto.objects.all()
+    # otra forma de traer los productos a la lista
+    # data = { 'productos': Producto.objects.all() }
+
+    # cambiar porcentaje a TODOS los productos
+    # recorre cada producto de la lista
+    # for producto in productos:
+    #     producto.descuento_subscriptor = 6
+    #     producto.save()
+    
+    # contar los productos
+    # Producto.objects.count()
+    
+    # se tienen que retornar los productos a travez de un JSON
+    # data = { 'productos': productos }
+        
+    # return render(request, 'core/index.html', data)
+
 
 def ropa(request):
     data = {'titulo': 'Concurso de Ropa'}
@@ -81,6 +121,7 @@ def productos(request, action, id):
             "id": id}
     
 
+
     if action == 'ins':
         
         if request.method == "POST":
@@ -120,5 +161,12 @@ def productos(request, action, id):
 
     data["list"] = Producto.objects.all().order_by('id')
 
+    
+    # productos = Producto.objects.all()
+    # para usar el for y cambiar a todas las tablas
+    # hay que crear primero un objeto en el def que contenga los datos
+    # for producto in productos:
+    #      producto.descuento_subscriptor = 10
+    #      producto.save()
 
     return render(request, 'core/productos.html',data)

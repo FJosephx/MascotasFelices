@@ -1,7 +1,7 @@
 
 {% extends 'core/base.html' %}
 {% load static %}
-
+{% load custom_filters %}
 {% block content %}
 
 <div id="carouselExampleInterval" class="carousel slide container" data-bs-ride="carousel">
@@ -34,44 +34,49 @@
   {% if list %}
   <section class="slick-carousel">
     {% for productos in list %}
-    <!-- producto 1 -->
-    <div class="card_productos">
-      
-      <section class="p-5">
-          <a href="{% url 'ficha' productos.id %}">
-            <img src="/media/{{ productos.imagenProducto }}" class="card-img-top" alt="..." />
 
-            <div class="card-body">
+    <div class="d-flex justify-content-center container mt-5">
+      <div class="card p-3 bg-white">
+          <div class="about-product text-center mt-2"><img src="/media/{{ productos.imagenProducto }}" width="200">
+              <div>
+                  <h4>{{ productos.nombreProducto }}</h4>
+                  {% if productos.disponibilidadProducto == '1' %}
+                    <h6 class="mt-0 text-black-50">{{ productos.get_disponibilidadProducto_display }}</h6>
+                  {% elif productos.disponibilidadProducto == '2' %}
+                    <h6 class="mt-0 text-black-50">{{ productos.get_disponibilidadProducto_display }}</h6>
+          
+                  {% elif productos.disponibilidadProducto == '3' %}
+                    <h6 class="mt-0 text-black-50">{{ productos.get_disponibilidadProducto_display }}</h6>
+          
+                  {% else %}
+                    <h6 class="mt-0 text-black-50">{{ productos.get_disponibilidadProducto_display }}</h6>
+          
+                  {% endif %}
+
+              </div>
               
-              <h4 class="mt-4 fw-6">EN OFERTA!</h4>
-              
-              <h3>{{ productos.nombreProducto }}</h3>
+              <h6 class="mt-0 text-black-50 fs-4">{{ productos.precioProducto|formatear_dinero }}</h6>
+
+          </div>
 
 
-              {% if productos.categoriaProducto.nombreCategoria == 'Perro' %}
-              <h6 class="mt-0 " style="color: green;">{{ productos.categoriaProducto.nombreCategoria }}</h6>
-              {% elif productos.categoriaProducto.nombreCategoria == 'Gato' %}
-              <h6 class="mt-0 " style="color: red;">{{ productos.categoriaProducto.nombreCategoria }}</h6>
-              {% elif productos.categoriaProducto.nombreCategoria == 'Otros' %}
-              <h6 class="mt-0 " style="color: yellow;">{{ productos.categoriaProducto.nombreCategoria }}</h6>
-              {% else %}
-              <h6 class="mt-0 ">{{ productos.categoriaProducto.nombreCategoria }}</h6>
-              {% endif %}
+          <a href="{% url 'ficha' productos.id %}" class="btn btn-primary">Comprar Ahora</a>
 
-              <h2 class="fw-1">$ {{ productos.precioProducto }}</h2>
-            </div>
-          </a>
-      </section>
-
-
-      
+      </div>
     </div>
+
     {% endfor %}
 
 
   </section>
   {% else %}
-    <h1>no hay datos</h1>
+  
+    {% if resultado %}
+    <h1>No se encontro {{ resultado }}</h1>
+    {% else %}
+    <h1>No hay datos</h1>
+    {% endif %}
+
   {% endif %}
 
 

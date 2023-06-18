@@ -6,21 +6,9 @@
 {% block content %}
 
 
-
 {% if form.nombreProducto.value %}
-<div class="container text-info py-3">
-  <div class="row">
-    <div class="col text-end">
-      <h1>{{ form.nombreProducto.value }}</h1>
-
-    </div>
-    <div class="col text-start">
-      <img style="height: 200px;" id="imagen-producto" src="/media/{{ form.imagenProducto.value }}" alt="Vista previa de la imagen">
-    
-    </div>
-
-  </div>
-
+<div class="container text-center text-info py-3">
+  <h1>{{ form.nombreProducto.value }}</h1>
 </div>
 {% else %}
 <div class="container text-center py-3">
@@ -29,28 +17,25 @@
 {% endif %}
 
 {% if form %}
-<form class="row py-4 g-4" method="POST" enctype="multipart/form-data" id="formulario1" novalidate>
+<form class="row py-4 g-4" method="POST" enctype="multipart/form-data" id="formulario">
       <!-- todos los datos del cliente -->
   <div class="row justify-content-center">
-    <div class="col-sm-12 col-md-4 col-lg-4">
+    <div class="col-3">
       {% csrf_token %}
 
-      <div class="col mb-3">
-        {{ form.cantidadProducto.label_tag }}
-        {{ form.cantidadProducto }}
-      </div>
 
-      <div class="mb-3">
+
+      <div class="col mb-3">
             {{ form.nombreProducto.label_tag }}
             {{ form.nombreProducto }}
       </div>
 
-      <div class="mb-3">
+      <div class="col mb-3">
             {{ form.descripcionProducto.label_tag }}
             {{ form.descripcionProducto }}
       </div>
 
-      <div class="mb-3">
+      <div class="col mb-3">
             {{ form.precioProducto.label_tag }}
             {{ form.precioProducto }}
       </div>
@@ -58,7 +43,7 @@
       
     </div>
       
-    <div class="col-sm-12 col-md-4 col-lg-4">
+    <div class="col-3">
 
       <!-- <div class="col mb-3">
         {% if form.imagenProducto.value %}
@@ -70,28 +55,22 @@
         {% endif %}
       </div> -->
 
-      <div class="col mb-3">
 
-        {{ form.imagenProducto.label_tag }}
-        {{ form.imagenProducto }}
-      </div>
                 
 
-      <div class="row">
-        <div class="col mb-3">
-              {{ form.categoriaProducto.label_tag }}
-              {{ form.categoriaProducto }}
-        </div>
-        <div class="col mb-3">
-              {{ form.disponibilidadProducto.label_tag }}
-              {{ form.disponibilidadProducto }}
-        </div>
+      <div class="col mb-3">
+        {{ form.categoriaProducto.label_tag }}
+        {{ form.categoriaProducto }}
+      </div>
+      <div class="col mb-3">
+        {{ form.disponibilidadProducto.label_tag }}
+        {{ form.disponibilidadProducto }}
       </div>
 
       <div class="row">
         <div class="col mb-3">
-          {{ form.descuento_subscriptor.label_tag }}
-          {{ form.descuento_subscriptor }}
+          {{ form.descSubscriptor.label_tag }}
+          {{ form.descSubscriptor }}
         </div>
         <div class="col mb-3">
           {{ form.descuento_oferta.label_tag }}
@@ -99,6 +78,18 @@
         </div>
       </div>
       
+    </div>
+
+    <div class="col-3">
+      <img style="height: 200px;" src="/media/{{ form.imagenProducto.value }}" alt="Vista previa de la imagen">
+
+
+
+      <div class="col mb-3">
+
+        {{ form.imagenProducto.label_tag }}
+        {{ form.imagenProducto }}
+      </div>
     </div>
       
     <div class="row" id="botones">
@@ -145,9 +136,6 @@
 </form>
 {% endif %}
 
-
-
-
 {% if list %}
 <table class="container table table-sm table-hover">
   <thead>
@@ -172,7 +160,7 @@
         <td>{{ producto.nombreProducto }}</td>
         <!-- <td>{{ producto.descripcionProducto }}</td> -->
         <td>{{ producto.precioProducto|formatear_dinero }}</td>
-        <td>{{ producto.descuento_subscriptor|formatear_porcentaje }}</td>
+        <td>{{ producto.descSubscriptor|formatear_porcentaje }}</td>
         <td>{{ producto.descuento_oferta|formatear_porcentaje }}</td>
         <td><img src="/media/{{ producto.imagenProducto }}" style="height: 150px;" alt=""></td>
         
@@ -182,8 +170,28 @@
           </a>
         </td>
         <td>
-          <a href="{% url 'productos' 'del' producto.id %}" class="btn btn-danger btn-lg"><i class="bi bi-trash3-fill"></i>
-          </a>
+          <!-- trigger modal -->
+          <button type="button" class="btn btn-danger btn-lg bi bi-trash3-fill" data-bs-toggle="modal" data-bs-target="#exampleModal"></button>
+          <!-- <a href="{% url 'productos' 'del' producto.id %}" class="btn btn-danger btn-lg"><i class="bi bi-trash3-fill"></i>
+          </a> -->
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar Producto: {{ producto.id }}</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  Estas seguro que quieres eliminar el producto {{ producto.nombreProducto }} {{ producto.id }}
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">Cancelar</button>
+                  <a href="{% url 'productos' 'del' producto.id %}" class="btn btn-danger btn-lg">Eliminar <i class="bi bi-trash3-fill"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
         </td>
     </tr>
     {% endfor %}
@@ -192,7 +200,8 @@
 
 {% endif %}
 
-
-
 {% endblock %}   
 
+{% block script %}
+  <script src="{% static 'core/js/producto.js' %}"></script>
+{% endblock script %}

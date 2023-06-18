@@ -20,16 +20,15 @@ class Producto(models.Model):
         ('3', 'En oferta'),
     )
 
-    disponibilidadProducto = models.CharField(max_length=1, choices=DISPONIBILIDAD_CHOICES, verbose_name="Disponibilidad")
+    disponibilidadProducto = models.CharField(max_length=1, choices=DISPONIBILIDAD_CHOICES, verbose_name="Disponibilidad Producto")
 
-    cantidadProducto = models.IntegerField(default=1, verbose_name="Cantidad Producto")
 
     nombreProducto = models.CharField(max_length=80, blank=False, null=False, verbose_name="Nombre Producto")
     descripcionProducto = models.CharField(max_length=80, null=True, blank=True, verbose_name="Descripcion Producto")
-    
-    precioProducto = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Precio Producto")
-    descuento_subscriptor = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Desc. Subscriptor")
-    descuento_oferta = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Desc. Oferta")
+
+    precioProducto = models.DecimalField(max_digits=10, decimal_places=0, verbose_name="Precio Producto")
+    descSubscriptor = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Desc. Subscriptor")
+    descuento_oferta = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Descuento Oferta")
 
     imagenProducto = models.ImageField(upload_to="images/", default="sinfoto.jpg", null=False, blank=False, verbose_name="Imagen Producto")
     
