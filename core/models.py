@@ -30,7 +30,7 @@ class Producto(models.Model):
     descSubscriptor = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Desc. Subscriptor")
     descuento_oferta = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Descuento Oferta")
 
-    imagenProducto = models.ImageField(upload_to="images/", default="sinfoto.jpg", null=False, blank=False, verbose_name="Imagen Producto")
+    imagenProducto = models.ImageField(upload_to="images/", null=False, blank=False, verbose_name="Imagen Producto")
     
 
     categoriaProducto = models.ForeignKey(CategoriaProducto, on_delete=models.DO_NOTHING, verbose_name="Categoria Producto")
