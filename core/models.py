@@ -7,14 +7,14 @@ from django.db.models import Min
 from django.db import connection
 
 # Create your models here
-class CategoriaProducto(models.Model):
-    nombreCategoria = models.CharField(max_length=80, blank=False, null=False, verbose_name="Nombre de la categoría")
+class Categoria(models.Model):
+    nombre = models.CharField(max_length=80, blank=False, null=False, verbose_name="Nombre de la categoría")
     
     class Meta:
         db_table = 'Categoria'
         verbose_name = "Categoría de producto"
         verbose_name_plural = "Categorías de productos"
-        ordering = ['nombreCategoria']
+        ordering = ['nombre']
     
     def __str__(self):
         return f'{self.nombre}'
@@ -28,19 +28,11 @@ class CategoriaProducto(models.Model):
 # Create Modelo para Productos
 class Producto(models.Model):
 
-    DISPONIBILIDAD_CHOICES = (
-        ('1', 'Disponible en bodega'),
-        ('2', 'Agotado'),
-        ('3', 'En oferta'),
-    )
 
-    disponibilidadProducto = models.CharField(max_length=1, choices=DISPONIBILIDAD_CHOICES, verbose_name="Disponibilidad Producto")
+    nombre = models.CharField(max_length=80, blank=False, null=False, verbose_name="Nombre Producto")
+    descripcion = models.CharField(max_length=80, null=True, blank=True, verbose_name="Descripcion Producto")
 
-
-    nombreProducto = models.CharField(max_length=80, blank=False, null=False, verbose_name="Nombre Producto")
-    descripcionProducto = models.CharField(max_length=80, null=True, blank=True, verbose_name="Descripcion Producto")
-
-    precioProducto = models.IntegerField(verbose_name="Precio Producto", blank=False, null=False, )
+    precio = models.IntegerField(verbose_name="Precio Producto", blank=False, null=False, )
     descSubscriptor = models.IntegerField(
         validators=[MinValueValidator(0), MaxValueValidator(100)], 
         verbose_name="Desc. Subscriptor",
@@ -54,10 +46,10 @@ class Producto(models.Model):
         null=False,
         )
 
-    imagenProducto = models.ImageField(upload_to="images/", null=False, blank=False, verbose_name="Imagen Producto")
+    imagen = models.ImageField(upload_to="images/", null=False, blank=False, verbose_name="Imagen Producto")
     
 
-    categoriaProducto = models.ForeignKey(CategoriaProducto, on_delete=models.DO_NOTHING, verbose_name="Categoria Producto")
+    categoria = models.ForeignKey(Categoria, on_delete=models.DO_NOTHING, verbose_name="Categoria Producto")
 
 
     def __str__(self):

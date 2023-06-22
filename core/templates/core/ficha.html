@@ -6,27 +6,19 @@
 <div class="container">
       <div class="row mt-2">
         <div class="col-sm text-end">
-          <img style="height: 500px;" src="/media/{{ producto.imagenProducto }}" alt="">
+          <img style="height: 500px;" src="/media/{{ producto.imagen }}" alt="">
         </div>
         <div class="col-sm text-start">
           <br>
 
-          <h1 class="fs-2 fw-semibold">{{ producto.nombreProducto }}</h1>
+          <h1 class="fs-2 fw-semibold">{{ producto.nombre }}</h1>
 
-          {% if producto.disponibilidadProducto == '1' %}
-          <h2 class="fs-3 text-info fw-bold">{{ producto.get_disponibilidadProducto_display }}</h2>
-          {% elif producto.disponibilidadProducto == '2' %}
-          <h6 class="fs-3 text-danger fw-bold">{{ producto.get_disponibilidadProducto_display }}</h6>
-          {% elif producto.disponibilidadProducto == '3' %}
-          <h6 class="fs-3 text-primary fw-bold">{{ producto.get_disponibilidadProducto_display }}</h6>
-          {% else %}
-          <h6 class="fs-3 fw-bold">{{ producto.get_disponibilidadProducto_display }}</h6>
-          {% endif %}
+
           
-          <p class="fs-4 fw-medium mt-4">{{ producto.precioProducto|formatear_dinero }}</p>
+          <p class="fs-4 fw-medium mt-4">{{ producto.precio|formatear_dinero }}</p>
           <p class="fs-6 fw-bold mb-1">DESCRIPCION</p>
           <p class="fs-6 fw-normal">
-            {{ producto.descripcionProducto }}
+            {{ producto.descripcion }}
           </p>
           <a href="registro.html"><button class="btn btn-primary btn-lg mt-3">Comprar</button></a>
           <a href="carrito.html"><button class="btn btn-outline-primary btn-lg mt-3">Agregar al carrito <span><i class="bi bi-cart"></i></span></button></a>

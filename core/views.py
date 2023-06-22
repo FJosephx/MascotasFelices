@@ -18,12 +18,12 @@ import locale
 def home(request):
      resultado=''
      
-     list = Producto.objects.all().order_by('nombreProducto')
+     list = Producto.objects.all().order_by('nombre')
      if request.method == 'POST':
          buscar = request.POST.get('buscar')
          if buscar.strip() != '':
              resultado = buscar
-             list = Producto.objects.filter(nombreProducto__icontains=buscar).order_by('nombreProducto')
+             list = Producto.objects.filter(nombre__icontains=buscar).order_by('nombre')
              
      data = { 
          'titulo': 'Mascotas Felices', 
@@ -62,9 +62,9 @@ def ficha(request, id):
     producto = Producto.objects.get(id=id)
 
 
-    data = {'titulo': producto.nombreProducto, 
+    data = {'titulo': producto.nombre, 
             "producto": producto, 
-            "nombreProducto": producto.nombreProducto,
+            "nombre": producto.nombre,
 
             }
     
@@ -150,7 +150,7 @@ def productos(request, action, id):
                 data["mesg_class"] = "success"
 
         data["form"] = ProductoForm(instance=objeto)
-        data["imagenProducto_url"] = objeto.imagenProducto.url
+        data["imagen_url"] = objeto.imagen.url
 
 
     elif action == 'del':

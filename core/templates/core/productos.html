@@ -6,9 +6,9 @@
 {% block content %}
 
 
-{% if form.nombreProducto.value %}
+{% if form.nombre.value %}
 <div class="container text-center text-info py-3">
-  <h1>{{ form.nombreProducto.value }}</h1>
+  <h1>{{ form.nombre.value }}</h1>
 </div>
 {% else %}
 <div class="container text-center py-3">
@@ -26,18 +26,18 @@
 
 
       <div class="col mb-3">
-            {{ form.nombreProducto.label_tag }}
-            {{ form.nombreProducto }}
+            {{ form.nombre.label_tag }}
+            {{ form.nombre }}
       </div>
 
       <div class="col mb-3">
-            {{ form.descripcionProducto.label_tag }}
-            {{ form.descripcionProducto }}
+            {{ form.descripcion.label_tag }}
+            {{ form.descripcion }}
       </div>
 
       <div class="col mb-3">
             {{ form.precioProducto.label_tag }}
-            {{ form.precioProducto }}
+            {{ form.precio }}
       </div>
       
       
@@ -46,11 +46,11 @@
     <div class="col-mb-6 col-sm-3">
 
       <!-- <div class="col mb-3">
-        {% if form.imagenProducto.value %}
-        <img style="height: 200px;" id="imagen-producto" src="/media/{{ form.imagenProducto.value }}" alt="Vista previa de la imagen">
-        <input type="hidden" name="nombre_archivo" value="{{ form.imagenProducto.value }}">
+        {% if form.imagen.value %}
+        <img style="height: 200px;" id="imagen-" src="/media/{{ form.imagen.value }}" alt="Vista previa de la imagen">
+        <input type="hidden" name="nombre_archivo" value="{{ form.imagen.value }}">
         {% else %}
-        <img id="imagen-producto" src="{% static 'core/images/sin-imagen.png' %}" alt="Vista previa de la imagen">
+        <img id="imagen-" src="{% static 'core/images/sin-imagen.png' %}" alt="Vista previa de la imagen">
         <input type="hidden" name="nombre_archivo" name="id_nombre_archivo" value="">
         {% endif %}
       </div> -->
@@ -59,13 +59,10 @@
                 
 
       <div class="col mb-3">
-        {{ form.categoriaProducto.label_tag }}
-        {{ form.categoriaProducto }}
+        {{ form.categoria.label_tag }}
+        {{ form.categoria }}
       </div>
-      <div class="col mb-3">
-        {{ form.disponibilidadProducto.label_tag }}
-        {{ form.disponibilidadProducto }}
-      </div>
+
 
       <div class="row">
         <div class="col mb-3">
@@ -81,9 +78,9 @@
     </div>
 
     <div class="col-mb-6 col-sm-3">
-      {% if form.imagenProducto.value %}
+      {% if form.imagen.value %}
       <div class="container text-center">
-        <img style="height: 200px;" src="/media/{{ form.imagenProducto.value }}" alt="Vista previa de la imagen">
+        <img style="height: 200px;" src="/media/{{ form.imagen.value }}" alt="Vista previa de la imagen">
       </div>
       {% else %}
       <div class="container text-center py-3">
@@ -93,8 +90,8 @@
       {% endif %}
       <div class="col mb-3">
 
-        {{ form.imagenProducto.label_tag }}
-        {{ form.imagenProducto }}
+        {{ form.imagen.label_tag }}
+        {{ form.imagen }}
 
       </div>
 
@@ -165,13 +162,13 @@
       {% for producto in list %}
       <tr>
           <td>{{ producto.id }}</td>
-          <td>{{ producto.categoriaProducto }}</td>
-          <td>{{ producto.nombreProducto }}</td>
+          <td>{{ producto.categoria }}</td>
+          <td>{{ producto.nombre }}</td>
           <!-- <td>{{ producto.descripcionProducto }}</td> -->
-          <td>{{ producto.precioProducto|formatear_dinero }}</td>
+          <td>{{ producto.precio|formatear_dinero }}</td>
           <td>{{ producto.descSubscriptor|formatear_porcentaje }}</td>
           <td>{{ producto.descuento_oferta|formatear_porcentaje }}</td>
-          <td><img src="/media/{{ producto.imagenProducto }}" style="height: 150px;" alt=""></td>
+          <td><img src="/media/{{ producto.imagen }}" style="height: 150px;" alt=""></td>
           
 
           <td>
@@ -192,7 +189,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                    Estas seguro que quieres eliminar el producto {{ producto.nombreProducto }} {{ producto.id }}
+                    Estas seguro que quieres eliminar el producto {{ producto.nombre }} {{ producto.id }}
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">Cancelar</button>

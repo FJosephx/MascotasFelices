@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm, fields
-from .models import Producto, CategoriaProducto
+from .models import Producto, Categoria
 from django.forms.widgets import ClearableFileInput
 
 form_file = {'class': 'form-control-file form-control form-control-sm', 'title': 'Debe subir una imagen'}
@@ -19,24 +19,22 @@ class ProductoForm(ModelForm):
     class Meta:
         model = Producto
         fields = [
-                  'nombreProducto', 
-                  'descripcionProducto', 
-                  'precioProducto', 
+                  'nombre', 
+                  'descripcion', 
+                  'precio', 
                   'descSubscriptor',
                   'descuento_oferta', 
-                  'imagenProducto', 
-                  'categoriaProducto', 
-                  'disponibilidadProducto',
+                  'imagen', 
+                  'categoria', 
                   ]
 
         widgets = {
-            'nombreProducto': forms.TextInput(attrs=form_control),
-            'descripcionProducto': forms.Textarea(attrs=form_text_area),
-            'precioProducto': forms.NumberInput(attrs=form_precio),
+            'nombre': forms.TextInput(attrs=form_control),
+            'descripcion': forms.Textarea(attrs=form_text_area),
+            'precio': forms.NumberInput(attrs=form_precio),
             'descSubscriptor': forms.NumberInput(attrs=form_desc),
             'descuento_oferta': forms.NumberInput(attrs=form_descOferta),
-            'disponibilidadProducto': forms.Select(attrs=form_select),
-            'imagenProducto' : forms.FileInput(attrs=form_file),
-            'categoriaProducto' : forms.Select(attrs=form_select),
+            'imagen' : forms.FileInput(attrs=form_file),
+            'categoria' : forms.Select(attrs=form_select),
         } 
 

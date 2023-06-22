@@ -38,25 +38,14 @@
 
     <div class="d-flex justify-content-center container mt-5">
       <div class="card p-3 bg-white">
-          <div class="about-product text-center mt-2"><img src="/media/{{ productos.imagenProducto }}" width="200">
+          <div class="about-product text-center mt-2"><img src="/media/{{ productos.imagen }}" width="200">
               <div>
-                  <h4>{{ productos.nombreProducto }}</h4>
-                  {% if productos.disponibilidadProducto == '1' %}
-                    <h6 class="mt-0 text-black-50">{{ productos.get_disponibilidadProducto_display }}</h6>
-                  {% elif productos.disponibilidadProducto == '2' %}
-                    <h6 class="mt-0 text-black-50">{{ productos.get_disponibilidadProducto_display }}</h6>
-          
-                  {% elif productos.disponibilidadProducto == '3' %}
-                    <h6 class="mt-0 text-black-50">{{ productos.get_disponibilidadProducto_display }}</h6>
-          
-                  {% else %}
-                    <h6 class="mt-0 text-black-50">{{ productos.get_disponibilidadProducto_display }}</h6>
-          
-                  {% endif %}
+                  <h4>{{ productos.nombre }}</h4>
+
 
               </div>
               
-              <h6 class="mt-0 text-black-50 fs-4">{{ productos.precioProducto|formatear_dinero }}</h6>
+              <h6 class="mt-0 text-black-50 fs-4">{{ productos.precio|formatear_dinero }}</h6>
 
           </div>
 
