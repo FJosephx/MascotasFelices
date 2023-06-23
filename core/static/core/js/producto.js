@@ -8,7 +8,7 @@ $(document).ready(function(){
         },
     });
 
-    $('#formulario').validate({ 
+    $('#form').validate({ 
         rules: {
 
             
@@ -32,7 +32,7 @@ $(document).ready(function(){
                 required: true,
                 // extension: "jpg|jpeg|png"
             },
-            'categoriaProducto': {
+            'categoria': {
                 required: true,
             },
             'disponibilidadProducto': {
@@ -73,7 +73,7 @@ $(document).ready(function(){
                 required: 'Debe ingresar la imagen del producto',
                 // extension: "Seleccione una imagen en formato JPG, JPEG, PNG"
             },
-            'categoriaProducto': {
+            'categoria': {
                 required: 'Debe ingresar una categoria',
             },
             'disponibilidadProducto': {

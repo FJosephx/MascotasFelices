@@ -4,20 +4,17 @@
 {% load custom_filters %}
 
 {% block content %}
-
-
 {% if form.nombre.value %}
-<div class="container text-center text-info py-3">
+<div class="container text-center text-info py-0">
   <h1>{{ form.nombre.value }}</h1>
 </div>
 {% else %}
-<div class="container text-center py-3">
+<div class="container text-center py-0">
   <h1>Mantenedor de Productos</h1>
 </div>
 {% endif %}
 
-{% if form %}
-<form class="row py-4 g-4" method="POST" enctype="multipart/form-data" id="formulario">
+<form class="row py-4 g-4" method="POST" enctype="multipart/form-data" id="form">
       <!-- todos los datos del cliente -->
   <div class="row justify-content-center">
     <div class="col-mb-6 col-sm-3">
@@ -100,111 +97,95 @@
     <div class="row" id="botones">
           <div class="col text-center">
 
-            {% if id != '-1' %}
-            <input type="submit" class="btn btn-primary"  value="Actualizar Producto">
-            <a class="btn btn-outline-primary" href="{% url 'admin_productos' 'ins' -1 %}">Nuevo</a>
 
-            {% else %}
-            <input type="submit" class="btn btn-primary"  value="Agregar Producto">
-
-            <a class="btn btn-outline-primary" href="{% url 'admin_productos' 'ins' -1 %}">Nuevo</a>
-
+            <input type="submit" class="btn btn-primary ancho-150px" value="Guardar">
+            <a class="btn btn-success ancho-150px" href="{% url 'admin_productos' 'crear' '0' %}"> Nuevo </a>
+            {% if form.instance.id %}
+              <a class="btn btn-danger ancho-150px" href="{% url 'admin_productos' 'eliminar' form.instance.id %}"> Eliminar </a>
             {% endif %}
 
 
-            
-            {% if id != '-1' %}
-            <a class="btn btn-danger" href="{% url 'admin_productos' 'del' id %}">Eliminar</a>
-            {% endif %}
-            
-            {% if mesg %}
-            
-            <div class="container">
-              {% if mesg_class == 'success' %}
-              <div id="form_message" class="alert alert-success" role="alert">{{ mesg }}</div>
-              {% elif mesg_class == 'error' %}
-              <div id="form_message" class="alert alert-danger" role="alert">{{ mesg }}</div>
-              {% elif mesg_class == 'ins' %}
-              <div id="form_message" class="alert alert-primary" role="alert">{{ mesg }}</div>
-              {% else %}
-              <div id="form_message" class="alert alert-info" role="alert">{{ mesg }}</div>
-              {% endif %}
-            </div>
-
-
-            {% endif %}
           </div>
     </div>
         
   </div>
 
 </form>
+
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
 {% endif %}
 
-{% if list %}
-<div class="table-responsive">
-  <table class="container table table-sm table-hover">
-    <thead>
-      <tr>
-          <th>ID</th>
-          <th>Categoria</th>
-          <th>Nombre</th>
-          <!-- <th>Descripcion</th> -->
-          <th>Precio</th>
-          <th>Subscriptor</th>
-          <th>Oferta</th>
-          <th>Imagen</th>
-          <th>Editar</th>
-          <th>Eliminar</th>
-      </tr>
-    </thead>
-    <tbody class="table-group-divider">
-      {% for producto in list %}
-      <tr>
-          <td>{{ producto.id }}</td>
-          <td>{{ producto.categoria }}</td>
-          <td>{{ producto.nombre }}</td>
-          <!-- <td>{{ producto.descripcionProducto }}</td> -->
-          <td>{{ producto.precio|formatear_dinero }}</td>
-          <td>{{ producto.descuento_subscriptor|formatear_porcentaje }}</td>
-          <td>{{ producto.descuento_oferta|formatear_porcentaje }}</td>
-          <td><img src="/media/{{ producto.imagen }}" style="height: 150px;" alt=""></td>
-          
+{% if productos %}
+  <div class="table-responsive">
+    <table id="tabla-principal" class="container table table-sm table-hover">
+      <thead>
+          <tr>
+              <th> ID </th>
+              <th> Categoría </th>
+              <th> Nombre </th>
+              <th> Precio </th>
+              <th> Subscriptor </th>
+              <th> Oferta </th>
+              <th> Imagen </th>
+              <th> Editar </th>
+              <th> Eliminar </th>
+          </tr>
+      </thead>
+      <tbody class="table-group-divider">
+          {% for producto in productos %}
+              <tr>
+                  <td> {{ producto.id }} </td>
+                  <td> {{ producto.categoria }} </td>
+                  <td> {{ producto.nombre }} </td>
+                  <td> {{ producto.precio|formatear_dinero }} </td>
+                  <td> {{ producto.descuento_subscriptor|formatear_porcentaje }} </td>
+                  <td> {{ producto.descuento_oferta|formatear_porcentaje }} </td>
+                  <td>
+                      <img src="/media/{{ producto.imagen }}" style="height: 150px;"  alt="">
+                  </td>
+                  <td>
+                      <a href="{% url 'admin_productos' 'actualizar' producto.id %}" class="btn btn-primary btn-lg"><i class="bi bi-tools"></i>
 
-          <td>
-            <a href="{% url 'admin_productos' 'upd' producto.id %}" class="btn btn-primary btn-lg"><i class="bi bi-tools"></i>
-            </a>
-          </td>
-          <td>
-            <!-- trigger modal -->
-            <button type="button" class="btn btn-danger btn-lg bi bi-trash3-fill" data-bs-toggle="modal" data-bs-target="#exampleModal"></button>
+                  </td>
+                  <td>
+                      <form method="delete">
+                      
+                            <!-- trigger modal -->
+                            <button type="button" class="btn btn-danger btn-lg bi bi-trash3-fill" data-bs-toggle="modal" data-bs-target="#exampleModal"></button>
 
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar Producto: {{ producto.id }}</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    Estas seguro que quieres eliminar el producto {{ producto.nombre }} {{ producto.id }}
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">Cancelar</button>
-                    <a href="{% url 'admin_productos' 'del' producto.id %}" class="btn btn-danger btn-lg">Eliminar <i class="bi bi-trash3-fill"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
-
-
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar Producto: {{ producto.id }}</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    Estas seguro que quieres eliminar el producto {{ producto.nombre }} {{ producto.id }}
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">Cancelar</button>
+                                    <a href="{% url 'admin_productos' 'eliminar' producto.id %}" class="btn btn-danger btn-lg">Eliminar <i class="bi bi-trash3-fill"></i></a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                      
+                      </form>
+                  </td>
+              </tr>
+          {% endfor %}
+      </tbody>
+    </table> 
+  </div>
 {% endif %}
 
 {% endblock %}   

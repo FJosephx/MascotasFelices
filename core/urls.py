@@ -17,7 +17,7 @@ urlpatterns = [
     path('nosotros', nosotros, name="nosotros"),
     path('usuarios', usuarios, name="usuarios"),
     # path('productos', productos, name="productos"),
-    path('admin_productos/<action>/<id>', admin_productos, name="admin_productos"),
+    path('admin_productos/<accion>/<id>', admin_productos, name="admin_productos"),
 
     path('ventas', ventas, name="ventas"),
 
