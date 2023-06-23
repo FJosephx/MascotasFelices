@@ -89,7 +89,7 @@
     </nav>
 
 
-    <div>
+    <div class="container">
         {% block content %}
         {% endblock %}
     </div>
@@ -145,14 +145,11 @@
     crossorigin="anonymous"
     ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <!-- cdn slick -requiere jquery -->
     <script
       type="text/javascript"
       src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
     ></script>
     <!-- script archivo js -->
-    
     <script src="{% static 'core/js/script.js' %}"></script>
     {% block script %}
         

@@ -86,6 +86,7 @@ def ropa(request):
     return render(request, 'core/ropa.html', data)
 
 def ficha(request, id):
+    
     producto = Producto.objects.get(id=id)
 
 
