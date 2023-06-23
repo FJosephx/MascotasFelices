@@ -6,7 +6,7 @@
 {% block content %}
 
 <div id="carouselExampleInterval" class="carousel slide container" data-bs-ride="carousel">
-  <div class="carousel-inner">
+  <div class="carousel-inner rounded-4">
     <div class="carousel-item active" data-bs-interval="2000">
       <img src="{% static 'core/img/images/home/banner-1.jpg' %}" class="d-block w-100" alt="...">
     </div>
@@ -32,33 +32,46 @@
 
 
   <!-- la iteracion del list esta realcionada al list de views.py def productos -->
-  {% if list %}
+  {% if productos %}
   <section class="slick-carousel">
-    {% for productos in list %}
+    {% for producto in productos %}
 
-    <div class="d-flex justify-content-center container mt-5">
-      <div class="card p-3 bg-white">
-          <div class="about-product text-center mt-2"><img src="/media/{{ productos.imagen }}" width="200">
-              <div>
-                  <h4>{{ productos.nombre }}</h4>
+    <div class="d-flex container mt-5">
+      <div class="card p-3 bg-white rounded-4 justify-content-center">
+          <img class="rounded-4 mx-auto" src="/media/{{ producto.imagen }}" width="150px">
 
+          <div class="about-product mt-2">
 
+              <div class="text-center ">
+                  <h4 class="card-title">{{ producto.nombre }}</h4>
               </div>
-              
-              <h6 class="mt-0 text-black-50 fs-4">{{ productos.precio|formatear_dinero }}</h6>
+              <div class="text-center">
+                {{ producto.html_estado|safe }}
+              </div>
+              <div class="mt-2">
+                {{ producto.html_precio|safe }}
+              </div>
+              <div class="mt-2">
+                {{ producto.html_stock|safe }}
+              </div>
+
 
           </div>
 
-
-          <a href="{% url 'ficha' productos.id %}" class="btn btn-primary">Comprar Ahora</a>
+          <a href="{% url 'ficha' producto.id %}" class="btn btn-primary rounded-pill mt-4">Agregar al Carrito <span><i class="bi bi-cart"></i></span></a>
 
       </div>
     </div>
+
+
 
     {% endfor %}
 
 
   </section>
+
+
+
   {% else %}
   
     {% if resultado %}

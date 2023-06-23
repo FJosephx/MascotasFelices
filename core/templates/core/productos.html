@@ -36,7 +36,7 @@
       </div>
 
       <div class="col mb-3">
-            {{ form.precioProducto.label_tag }}
+            {{ form.precio.label_tag }}
             {{ form.precio }}
       </div>
       
@@ -66,8 +66,8 @@
 
       <div class="row">
         <div class="col mb-3">
-          {{ form.descSubscriptor.label_tag }}
-          {{ form.descSubscriptor }}
+          {{ form.descuento_subscriptor.label_tag }}
+          {{ form.descuento_subscriptor }}
         </div>
         <div class="col mb-3">
           {{ form.descuento_oferta.label_tag }}
@@ -166,7 +166,7 @@
           <td>{{ producto.nombre }}</td>
           <!-- <td>{{ producto.descripcionProducto }}</td> -->
           <td>{{ producto.precio|formatear_dinero }}</td>
-          <td>{{ producto.descSubscriptor|formatear_porcentaje }}</td>
+          <td>{{ producto.descuento_subscriptor|formatear_porcentaje }}</td>
           <td>{{ producto.descuento_oferta|formatear_porcentaje }}</td>
           <td><img src="/media/{{ producto.imagen }}" style="height: 150px;" alt=""></td>
           

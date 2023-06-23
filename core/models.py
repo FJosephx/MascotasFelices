@@ -33,7 +33,7 @@ class Producto(models.Model):
     descripcion = models.CharField(max_length=80, null=True, blank=True, verbose_name="Descripcion Producto")
 
     precio = models.IntegerField(verbose_name="Precio Producto", blank=False, null=False, )
-    descSubscriptor = models.IntegerField(
+    descuento_subscriptor = models.IntegerField(
         validators=[MinValueValidator(0), MaxValueValidator(100)], 
         verbose_name="Desc. Subscriptor",
         blank=False, 

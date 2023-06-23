@@ -38,7 +38,7 @@ $(document).ready(function(){
             'disponibilidadProducto': {
                 required: true,
             },
-            'descSubscriptor': {
+            'descuento_subscriptor': {
                 required: true,
                 digits: true,
                 number: true,
@@ -79,7 +79,7 @@ $(document).ready(function(){
             'disponibilidadProducto': {
                 required: 'Debe ingresar una disponibilidad',
             },
-            'descSubscriptor': {
+            'descuento_subscriptor': {
                 required: 'Debe Ingresar el Desc. Subscriptor',
                 number: 'Debe ingresar un número',
                 digits: 'Debe ingresar un número entero',

@@ -4,18 +4,20 @@ from datetime import date
 register = template.Library()
 
 @register.filter
-def formatear_separador_miles(value):
+def formatear_numero(value):
+    value = round(value)
     value = f'{value:,}'
     value = value.replace(',', '.')
     return value
 
+
 @register.filter
 def formatear_dinero(value):
+    value = round(value)
     value = f'${value:,}'
     value = value.replace(',', '.')
-    value = value.rstrip('0').rstrip('.') if '.' in value else value
-
     return value
+
 
 @register.filter
 def formatear_porcentaje(value):
