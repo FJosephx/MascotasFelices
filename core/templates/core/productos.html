@@ -102,19 +102,19 @@
 
             {% if id != '-1' %}
             <input type="submit" class="btn btn-primary"  value="Actualizar Producto">
-            <a class="btn btn-outline-primary" href="{% url 'productos' 'ins' -1 %}">Nuevo</a>
+            <a class="btn btn-outline-primary" href="{% url 'admin_productos' 'ins' -1 %}">Nuevo</a>
 
             {% else %}
             <input type="submit" class="btn btn-primary"  value="Agregar Producto">
 
-            <a class="btn btn-outline-primary" href="{% url 'productos' 'ins' -1 %}">Nuevo</a>
+            <a class="btn btn-outline-primary" href="{% url 'admin_productos' 'ins' -1 %}">Nuevo</a>
 
             {% endif %}
 
 
             
             {% if id != '-1' %}
-            <a class="btn btn-danger" href="{% url 'productos' 'del' id %}">Eliminar</a>
+            <a class="btn btn-danger" href="{% url 'admin_productos' 'del' id %}">Eliminar</a>
             {% endif %}
             
             {% if mesg %}
@@ -172,14 +172,13 @@
           
 
           <td>
-            <a href="{% url 'productos' 'upd' producto.id %}" class="btn btn-primary btn-lg"><i class="bi bi-tools"></i>
+            <a href="{% url 'admin_productos' 'upd' producto.id %}" class="btn btn-primary btn-lg"><i class="bi bi-tools"></i>
             </a>
           </td>
           <td>
             <!-- trigger modal -->
             <button type="button" class="btn btn-danger btn-lg bi bi-trash3-fill" data-bs-toggle="modal" data-bs-target="#exampleModal"></button>
-            <!-- <a href="{% url 'productos' 'del' producto.id %}" class="btn btn-danger btn-lg"><i class="bi bi-trash3-fill"></i>
-            </a> -->
+
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog">
@@ -193,7 +192,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">Cancelar</button>
-                    <a href="{% url 'productos' 'del' producto.id %}" class="btn btn-danger btn-lg">Eliminar <i class="bi bi-trash3-fill"></i></a>
+                    <a href="{% url 'admin_productos' 'del' producto.id %}" class="btn btn-danger btn-lg">Eliminar <i class="bi bi-trash3-fill"></i></a>
                   </div>
                 </div>
               </div>

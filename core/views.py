@@ -86,7 +86,7 @@ def ropa(request):
     return render(request, 'core/ropa.html', data)
 
 def ficha(request, id):
-    
+        
     producto = Producto.objects.get(id=id)
 
 
@@ -146,7 +146,7 @@ def ventas(request):
 
 
 
-def productos(request, action, id):
+def admin_productos(request, action, id):
     
     data = {'titulo': 'Admin. Productos', 
             "mesg": "", 
