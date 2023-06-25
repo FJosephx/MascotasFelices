@@ -1,6 +1,8 @@
 from django import forms
-from django.forms import ModelForm, fields
-from .models import Producto, Categoria
+from django.forms import ModelForm, fields, Form
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+from .models import Producto, Categoria, Perfil, Bodega
 from django.forms.widgets import ClearableFileInput
 
 form_file = {'class': 'form-control-file form-control form-control-sm', 'title': 'Debe subir una imagen'}
@@ -10,6 +12,7 @@ form_control = {'class': 'form-control form-control-sm', 'placeholder':'Ingrese 
 form_precio = {'class':'form-control', 'placeholder':'Ingrese el precio'}
 form_desc = {'class': 'form-control', 'placeholder':'3%'}
 form_descOferta = {'class': 'form-control', 'placeholder':'5%'}
+
 
 class ProductoForm(ModelForm):
     
@@ -38,3 +41,10 @@ class ProductoForm(ModelForm):
             'categoria' : forms.Select(attrs=form_select),
         } 
 
+
+
+class IngresarForm(Form):
+    username = forms.CharField(widget=forms.TextInput(attrs=form_control), label="Cuenta")
+    password = forms.CharField(widget=forms.PasswordInput(attrs=form_control), label="Contraseña")
+    class Meta:
+        fields = ['username', 'password']

@@ -2,28 +2,36 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
+{% block titulo %}
+Iniciar Sesion
+{% endblock titulo %}
+
 {% block content %}
 
-<h1 class="container mt-4 text-center">{{ titulo }}</h1>
+<h1 class="container mt-4 text-center">Iniciar Sesion</h1>
 
 
 
 <!-- formulario inicar sesion -->
-<form class="row g-4 mt-4" method="POST" id="formulario1" novalidate>
+<form class="row g-4 mt-4" method="POST" id="form">
     <div class="container-fluid">
       <div class="row justify-content-center">
         <!-- datos del cliente -->
         <div class="col-sm-12 col-md-4 col-lg-4">
 
+          {% csrf_token %} 
+          
 
           <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-            <label for="floatingInput">Email</label>
+            {{ form.username }}
+            {{ form.username.label_tag }}
           </div>
           <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-            <label for="floatingPassword">Contraseña</label>
+            {{ form.password }}
+            {{ form.password.label_tag }}
           </div>
+
+
 
 
           <!-- buton login -->
@@ -36,6 +44,15 @@
             No tienes Cuenta? <a href="{% url 'registro' %}" class="text-primary fw-bold"> Registrate Ahora!</a>
 
           </div>
+
+          {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+          {% endif %}
         </div>
 
       </div>

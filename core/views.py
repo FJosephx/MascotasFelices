@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import Categoria, Producto, Boleta, Carrito, DetalleBoleta, Bodega, Perfil
-from .forms import ProductoForm
+from .forms import ProductoForm, IngresarForm
+from django.contrib.auth.models import User
+from django.contrib.auth import login, logout, authenticate
 # , BodegaForm, RegistroClienteForm, IngresarForm
 import locale
 from core.templatetags.custom_filters import formatear_dinero, formatear_numero
@@ -38,7 +40,7 @@ def home(request):
 
     data = { 
         'productos': productos,
-        'titulo': 'Mascotas Felices', 
+        'titulo': 'Home | Mascotas Felices', 
         }
     
     return render(request, 'core/index.html', data)
@@ -88,27 +90,35 @@ def ropa(request):
     data = {'titulo': 'Concurso de Ropa'}
     return render(request, 'core/ropa.html', data)
 
-def ficha(request, id):
-        
-    producto = Producto.objects.get(id=id)
+def ficha(request, producto_id):
+
+    context = obtener_info_producto(producto_id)
 
 
-    data = {'titulo': producto.nombre, 
-            "producto": producto, 
-            "nombre": producto.nombre,
-
-            }
-    
-    return render(request, 'core/ficha.html', data)
+    return render(request, 'core/ficha.html', context)
 
 def registro(request):
     data = {'titulo': 'Registro'}
     return render(request, 'core/registro.html',data)
 
-def login(request):
-    data = {'titulo': 'Iniciar Sesion'}
-    return render(request, 'core/login.html', data)
+def inciar_sesion(request):
 
+    if request.method == "POST":
+        form = IngresarForm(request.POST)
+        if form.is_valid():
+            username    = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return redirect(home)
+            messages.error(request, 'La cuenta o la password no son correctos')
+    
+    return render(request, "core/iniciar_sesion.html", {
+        'form':  IngresarForm(),
+        'perfiles': Perfil.objects.all(),
+    })
 def administracion(request):
     data = {'titulo': 'Administracion'}
     return render(request, 'core/administracion.html',data)
@@ -244,8 +254,8 @@ def obtener_html_precios_producto(producto):
     
     normal = f'<div class="d-flex justify-content-between"><span>Normal:</span> <span>{formatear_dinero(precio_normal)}</span></div>'
     tachar = f'<div class="d-flex justify-content-between"><span>Normal:</span> <span class="text-decoration-line-through"> {formatear_dinero(precio_normal)} </span></div>'
-    oferta = f'<div class="d-flex justify-content-between"><span>Oferta:</span> <span class="text-success"> {formatear_dinero(precio_oferta)} </span></div>'
-    subscr = f'<div class="d-flex justify-content-between"><span>Subscrito:</span> <span class="text-danger"> {formatear_dinero(precio_subscr)} </span></div>'
+    oferta = f'<div class="d-flex justify-content-between"><span>Oferta:</span> <span class="text-success fw-bold"> {formatear_dinero(precio_oferta)} </span></div>'
+    subscr = f'<div class="d-flex justify-content-between"><span>Subscrito:</span> <span class="text-danger fw-bold"> {formatear_dinero(precio_subscr)} </span></div>'
 
     if hay_desc_oferta > 0:
         texto_precio = f'{tachar}{oferta}'
