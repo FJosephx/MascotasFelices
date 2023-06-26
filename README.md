@@ -1,17 +1,16 @@
 
-# Project Title
+# Mascotas Felices
 
-A brief description of what this project does and who it's for
+Tienda de Mascotas
 
-
-## Authors
+## Autores
 
 - [@RyggVortex](https://www.github.com/RyggVortex)
 - [@FJosephx](https://www.github.com/FJosephx)
 - [@ignacioodeveloper](https://www.github.com/ignacioodeveloper)
 
 
-## Tech Stack
+## Tecnologias Usadas
 
 **Client:** Boostrap, Jquery
 
@@ -22,7 +21,7 @@ A brief description of what this project does and who it's for
 Clonar Projecto
 
 ```bash
-  git clone [https://link-to-project](https://github.com/FJosephx/MascotasFelices)
+  git clone [https://github.com/FJosephx/MascotasFelices]
 ```
 
 Ir a la Carpeta
