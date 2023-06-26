@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import salir,admin_productos,ventas, usuarios,home, ropa, ficha, misdatos, nosotros, registro, inciar_sesion, administracion, bodega, boleta, miscompras, carrito
+from .views import obtener_productos,eliminar_producto_en_bodega,salir,admin_productos,ventas, usuarios,home, ropa, ficha, misdatos, nosotros, registro, inciar_sesion, administracion, bodega, boleta, miscompras, carrito
 
 
 urlpatterns = [
@@ -22,6 +22,8 @@ urlpatterns = [
     path('ventas', ventas, name="ventas"),
 
     path('salir', salir, name='salir'),
+    path('obtener_productos', obtener_productos, name='obtener_productos'),
 
+    path('eliminar_producto_en_bodega/<bodega_id>', eliminar_producto_en_bodega, name='eliminar_producto_en_bodega'),
 
 ]

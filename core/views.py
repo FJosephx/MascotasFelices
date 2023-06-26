@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Categoria, Producto, Boleta, Carrito, DetalleBoleta, Bodega, Perfil
-from .forms import ProductoForm, IngresarForm, RegistroClienteForm
+from .forms import ProductoForm, IngresarForm, RegistroClienteForm, BodegaForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 # , BodegaForm, RegistroClienteForm, IngresarForm
@@ -26,7 +26,7 @@ from django.db.models import ProtectedError
 #     return render(request, 'core/index.html', data)
 
 def home(request):
-
+    buscar = ''
     if request.method == 'POST':
         buscar = request.POST.get('buscar')
         registros = Producto.objects.filter(nombre__icontains=buscar).order_by('nombre')
@@ -40,7 +40,8 @@ def home(request):
 
     data = { 
         'productos': productos,
-        'titulo': 'Home | Mascotas Felices', 
+        'titulo': 'Home | Mascotas Felices',
+        'buscar': buscar 
         }
     
     return render(request, 'core/index.html', data)
@@ -145,8 +146,37 @@ def administracion(request):
     return render(request, 'core/administracion.html',data)
 
 def bodega(request):
-    data = {'titulo': 'Bodega'}
-    return render(request, 'core/bodega.html',data)
+
+    if request.method == 'POST':
+        producto_id = request.POST.get('producto')
+        producto = Producto.objects.get(id=producto_id)
+        cantidad = int(request.POST.get('cantidad'))
+        for cantidad in range(1, cantidad + 1):
+            Bodega.objects.create(producto=producto)
+        if cantidad == 1:
+            messages.success(request, f'Se ha agregado 1 nuevo "{producto.nombre}" a la bodega')
+        else:
+            messages.success(request, f'Se han agregado {cantidad} productos de "{producto.nombre}" a la bodega')
+
+    registros = Bodega.objects.all()
+    lista = []
+    for registro in registros:
+        vendido = DetalleBoleta.objects.filter(bodega=registro).exists()
+        item = {
+            'bodega_id': registro.id,
+            'nombre_categoria': registro.producto.categoria.nombre,
+            'nombre_producto': registro.producto.nombre,
+            'estado': 'Vendido' if vendido else 'En bodega',
+            'imagen': registro.producto.imagen,
+        }
+        lista.append(item)
+
+    return render(request, 'core/bodega.html', {
+        'form': BodegaForm(),
+        'productos': lista,
+    })
+    # data = {'titulo': 'Bodega'}
+    # return render(request, 'core/bodega.html',data)
 
 def boleta(request):
     data = {'titulo': 'Boleta'}
@@ -173,12 +203,33 @@ def usuarios(request):
     data = {'titulo': 'Admin. Usuarios'}
     return render(request, 'core/usuarios.html',data)
 
+def obtener_productos(request):
+    categoria_id = request.GET.get('categoria_id')
+    productos = Producto.objects.filter(categoria_id=categoria_id)
+    data = [
+        {
+            'id': producto.id, 
+            'nombre': producto.nombre, 
+            'imagen': producto.imagen.url
+        } for producto in productos
+    ]
+    return JsonResponse(data, safe=False)
 
 def ventas(request):
     data = {'titulo': 'Admin. Ventas'}
     return render(request, 'core/ventas.html',data)
 
+def eliminar_producto_en_bodega(request, bodega_id):
+    
+    nombre_producto = Bodega.objects.get(id=bodega_id).producto.nombre
+    eliminado, error = verificar_eliminar_registro(Bodega, bodega_id, True)
+    
+    if eliminado:
+        messages.success(request, f'Se ha eliminado el ID {bodega_id} ({nombre_producto}) de la bodega')
+    else:
+        messages.error(request, error)
 
+    return redirect(bodega)
 
 def admin_productos(request,id, accion):
     
@@ -293,3 +344,15 @@ def obtener_html_precios_producto(producto):
 def salir(request):
     logout(request)
     return redirect(home)
+
+def eliminar_producto_en_bodega(request, bodega_id):
+    
+    nombre_producto = Bodega.objects.get(id=bodega_id).producto.nombre
+    eliminado, error = verificar_eliminar_registro(Bodega, bodega_id, True)
+    
+    if eliminado:
+        messages.success(request, f'Se ha eliminado el ID {bodega_id} ({nombre_producto}) de la bodega')
+    else:
+        messages.error(request, error)
+
+    return redirect(bodega)

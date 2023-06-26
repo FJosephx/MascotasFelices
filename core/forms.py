@@ -19,7 +19,6 @@ form_text_area_registro = {'class': 'form-control form-control-sm', 'rows': 2, '
 form_control_registro = {'class': 'form-control form-control-sm'}
 
 form_hidden = {'class': 'd-none'}
-form_select = {'class': 'form-select'}
 form_check = {'class': 'form-check-input'}
 form_password = {'class': 'form-control text-danger', 'value': '123'}
 
@@ -56,6 +55,25 @@ class IngresarForm(Form):
     class Meta:
         fields = ['username', 'password']
 
+class BodegaForm(forms.Form):
+
+    categoria = forms.ModelChoiceField(
+        queryset=Categoria.objects.all(),
+        widget=forms.Select(attrs=form_select),
+        label='Categoría'
+    )
+    producto = forms.ModelChoiceField(
+        queryset=Producto.objects.none(), 
+        widget=forms.Select(attrs=form_select),
+        label='Producto'
+    )
+    cantidad = forms.IntegerField(
+        widget=forms.NumberInput(attrs=form_control),
+        label='Cantidad'
+    )
+
+    class Meta:
+        fields = '__all__'
 
 
 class RegistroClienteForm(UserCreationForm):

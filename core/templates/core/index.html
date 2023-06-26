@@ -3,7 +3,7 @@
 {% load static %}
 
 {% load custom_filters %}
-{% load custom_filters %}
+
 
 {% block titulo %}
 {{ titulo }}
@@ -63,8 +63,12 @@
   
   {% else %}
   
+  {% if buscar %}
+  <h1>No se encontro {{ buscar }}</h1>
 
-    <h1>No hay Datos </h1>
+  {% else %}
+    <h1>No hay Datos</h1>
+  {% endif %}
 
   {% endif %}
 
@@ -82,7 +86,7 @@
       de vestir
     </p>
     <div class="d-inline-flex gap-2 mb-5">
-      <a href="templates/core/ropa.html">
+      <a href="{% url 'ropa' %}">
       <button
         
         class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill"
@@ -140,5 +144,6 @@
 {% endblock %}
 
 {% block script %}
-    
+<script src="{% static 'core/js/script.js' %}"></script>
+
 {% endblock script %}

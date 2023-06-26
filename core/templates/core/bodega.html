@@ -1,111 +1,126 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
+{% load custom_filters %}
+
+
+{% block titulo %}
+
+
+Admin. Bodega
+
+{% endblock titulo %}
 {% block content %}
 
-<h1 class="container">Mantenedor de Bodega</h1>
-<!-- formulario de bodega -->
-<form class="row g-4" method="POST" id="formulario1" novalidate>
-      <div class="container-fluid">
-        <div class="row justify-content-center">
-          <div class="col-sm-12 col-md-4 col-lg-4">
-
-            <!-- categoria -->
-            <div class="container-fluid">
-            <div class="mb-3">
-
-              <label for="selectBodega">Categoria</label>
-              <select class="custom-select" name="selectBodega" id="selectBodega">
-                <option selected></option>
-                <option value="1">Perros</option>
-                <option value="2">Gatos</option>
-                <option value="3">Otros</option>
-              </select>
-
-            </div>
-            <br><br>
-            <!-- nombre -->
-            <div class="col mb-3">
-              <label for="name" class="form-label">Nombre del Producto</label>
-              <input
-                
-                type="text"
-                placeholder=""
-                class="form-control"
-                id="name"
-                name="name"
-                aria-describedby="nameHelp"
-              />
-            </div>
-            <br><br>
-            <!-- cantidad -->
-            <div class="mb-3">
-              <label for="cantProd" class="form-label">Cantidad</label>
-              <input
-                required
-                type="number"
-                placeholder="25"
-                class="form-control"
-                id="cantProd"
-                name="cantProd"
-                aria-describedby="cantProdHelp"
-              />
-              <div class="invalid-feedback">El campo id es obligatorio</div>
-            </div>
-          </div>
-          </div>
-
-          <!-- foto cliente -->
-          <div class="col-sm-12 col-md-4 text-center" id="foto">
-            <img style="height: 270px; width: 250px;" class="container-fluid" src="img/producto_4.png" alt="" />
-          </div>
-        </div>
-        <!-- botones -->
-        <div class="row container" id="botones">
-          <div class="col text-center">
-            <button type="submit" class="btn btn-primary">Nuevo</button>
-            <button type="submit" class="btn btn-primary">Agregar</button>
-          </div>
-      </div>
-      </div>
-</form>
-
-<!-- Tabla con registro de productos -->
-<div class="container">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Categoría</th>
-            <th>Nombre</th>
-            <th>Estado</th>
-            <th>Opciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>27</td>
-            <td>Perros</td>
-            <td>Saco alimento Royan Canin</td>
-            <td>Vendido</td>
-            <td><a href="#">Eliminar</a></td>
-          </tr>
-          <tr>
-            <td>28</td>
-            <td>Gato</td>
-            <td>Saco alimento don cuchito</td>
-            <td>En bodega</td>
-            <td><a href="#">Eliminar</a></td>
-          </tr>
-          <tr>
-            <td>29</td>
-            <td>Perros</td>
-            <td>Saco alimento Royan Canin</td>
-            <td>Entregado</td>
-            <td><a href="#">Eliminar</a></td>
-          </tr>
-        </tbody>
-    </table>
+<div class="container text-center py-0">
+  <h1>Admin. Bodega</h1>
 </div>
 
+
+<form class="row py-4 g-4" method="POST" enctype="multipart/form-data" id="form">
+    <!-- todos los datos del cliente -->
+<div class="row justify-content-center">
+  <div class="col-mb-6 col-sm-3">
+    {% csrf_token %}
+
+
+
+    <div class="col mb-3">
+          {{ form.categoria.label_tag }}
+          {{ form.categoria }}
+    </div>
+
+    <div class="col mb-3">
+          {{ form.producto.label_tag }}
+          {{ form.producto }}
+    </div>
+
+    <div class="col mb-3">
+          {{ form.cantidad.label_tag }}
+          {{ form.cantidad }}
+    </div>
+    
+    
+  </div>
+    
+
+
+  <div class="col-mb-6 col-sm-3">
+    <div class="col mb-3 text-center">
+
+        <img id="admin-bodega-imagen" class="border border-3 rounded-4" style="height: 200px;" src="{% static 'core/img/images/empty/empty_img.jpg' %}">
+
+    </div>
+
+    <div class="col mb-3">
+
+        {{ form.imagen.label_tag }}
+        {{ form.imagen }}
+
+    </div>
+
+  </div>
+    
+  <div class="row">
+        <div class="col text-center">
+
+
+            <button id="id_agregar" class="btn btn-primary ancho-150px" type="submit"> Agregar </button>
+            <button id="id_nuevo" class="btn btn-success ancho-150px"> Nuevo </button>
+
+        </div>
+  </div>
+      
+</div>
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+    {% endif %}
+</form>
+
+{% if productos %}
+<table id="tabla-principal" class="table table-hover">
+    <thead>
+        <tr>
+            <th> ID </th>
+            <th> Categoría </th>
+            <th> Producto </th>
+            <th> Estado </th>
+            <th> Imagen </th>
+            <th> Acción </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for producto in productos %}
+            <tr>
+                <td> {{ producto.bodega_id }} </td>
+                <td> {{ producto.nombre_categoria }} </td>
+                <td> {{ producto.nombre_producto }} </td>
+                <td> {{ producto.estado }} </td>
+                <td>
+                    <img src="/media/{{ producto.imagen }}" class="border border-3 rounded-4" style="height: 200px;"  alt="">
+                </td>
+                <td>
+                    {% if producto.estado == 'En bodega' %}
+                        <a href="{% url 'eliminar_producto_en_bodega' producto.bodega_id %}" 
+                            class="btn btn-danger btn-sm boton_chico"> Eliminar </a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
 {% endblock %}
+
+
+{% block script %}
+  <input type="hidden" id="url_obtener_productos" value="{% url 'obtener_productos' %}">
+
+  <script src="{% static 'core/js/bodega.js' %}"></script>
+{% endblock script %}

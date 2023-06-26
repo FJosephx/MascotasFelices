@@ -72,17 +72,17 @@
           </ul>
   
         </div>
-        {% if request.path == '/' %}
+        {% comment %} {% if request.path == '/' %} {% endcomment %}
   
-        <form class="d-flex pe-3" role="search" method="post">
+        <form class="d-flex pe-3" action="{% url 'home' %}" role="search" method="post">
           {% csrf_token %}
           <input class="form-control me-2" type="search" placeholder="Buscar productos" 
               aria-label="Search" id="buscar" id="buscar" name="buscar">
           <button class="btn btn-outline-success bi bi-search" type="submit"> </button>
         </form>
-        {% else %}
+        {% comment %} {% else %} {% endcomment %}
         
-        {% endif %}
+        {% comment %} {% endif %} {% endcomment %}
 
 
 
@@ -90,7 +90,7 @@
         <form method="post" action="{% url 'salir' %}">
           {% csrf_token %}
           <div class="text-end">
-              <button class="btn btn-outline-success bi bi-door-open" type="submit"></button>
+              <button class="btn btn-danger" type="submit">Salir</button>
           </div>
         </form>
         {% endif %}
@@ -170,9 +170,8 @@
       src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
     ></script>
     <!-- script archivo js -->
-    <script src="{% static 'core/js/script.js' %}"></script>
     {% block script %}
-        
+
     {% endblock script %}
   </body>
 </html>
