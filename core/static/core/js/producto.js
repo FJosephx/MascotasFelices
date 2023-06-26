@@ -15,29 +15,27 @@ $(document).ready(function(){
 
 
 
-            'nombreProducto': {
+            'nombre': {
                 required: true,
                 minlength: 2,
             },
-            'descripcionProducto': {
+            'descripcion': {
                 required: true,
                 minlength: 2,
             },
-            'precioProducto': {
+            'precio': {
                 required: true,
                 digits: true,
                 number: true,
             },
-            'imagenProducto': {
+            'imagen': {
                 required: true,
                 // extension: "jpg|jpeg|png"
             },
             'categoria': {
                 required: true,
             },
-            'disponibilidadProducto': {
-                required: true,
-            },
+
             'descuento_subscriptor': {
                 required: true,
                 digits: true,
@@ -56,29 +54,27 @@ $(document).ready(function(){
         },
         messages: {
 
-            'nombreProducto': {
+            'nombre': {
                 required: 'Debe ingresar el Nombre del Producto',
                 minlength: 'Debe ingresar mas de 2 letras'
             },
-            'descripcionProducto': {
+            'descripcion': {
                 required: 'Debe ingresar la descripcion del Producto',
                 minlength: 'Debe ingresar mas de 2 letras'
             },
-            'precioProducto': {
+            'precio': {
                 required: 'Debe ingresar el precio del producto',
                 number: 'Debe ingresar un número',
                 digits: 'Debe ingresar un número entero',
             },
-            'imagenProducto': {
+            'imagen': {
                 required: 'Debe ingresar la imagen del producto',
                 // extension: "Seleccione una imagen en formato JPG, JPEG, PNG"
             },
             'categoria': {
                 required: 'Debe ingresar una categoria',
             },
-            'disponibilidadProducto': {
-                required: 'Debe ingresar una disponibilidad',
-            },
+
             'descuento_subscriptor': {
                 required: 'Debe Ingresar el Desc. Subscriptor',
                 number: 'Debe ingresar un número',
@@ -114,6 +110,17 @@ $(document).ready(function(){
         
 
 
+    });
+
+    $('#id_imagen').change(function() {
+        var input = this;
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#admin-producto-imagen').attr('src', e.target.result).show();
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
     });
   
   });

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Categoria, Producto, Boleta, Carrito, DetalleBoleta, Bodega, Perfil
-from .forms import ProductoForm, IngresarForm
+from .forms import ProductoForm, IngresarForm, RegistroClienteForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 # , BodegaForm, RegistroClienteForm, IngresarForm
@@ -98,8 +98,24 @@ def ficha(request, producto_id):
     return render(request, 'core/ficha.html', context)
 
 def registro(request):
-    data = {'titulo': 'Registro'}
-    return render(request, 'core/registro.html',data)
+    form = RegistroClienteForm()
+    if request.method == 'POST':
+        form = RegistroClienteForm(request.POST, request.FILES)
+        if form.is_valid():
+            user = form.save()
+            rut = form.cleaned_data['rut']
+            direccion = form.cleaned_data['direccion']
+            subscrito = form.cleaned_data['subscrito']
+            Perfil.objects.create(
+                usuario=user, 
+                tipo_usuario='Cliente', 
+                rut=rut, 
+                direccion=direccion, 
+                subscrito=subscrito,
+                imagen=request.FILES['imagen'])
+            return redirect(inciar_sesion)
+            
+    return render(request, "core/registro.html", {'form': form})
 
 def inciar_sesion(request):
 
@@ -108,7 +124,10 @@ def inciar_sesion(request):
         if form.is_valid():
             username    = form.cleaned_data['username']
             password = form.cleaned_data['password']
+
             user = authenticate(username=username, password=password)
+
+
             if user is not None:
                 if user.is_active:
                     login(request, user)
@@ -119,6 +138,8 @@ def inciar_sesion(request):
         'form':  IngresarForm(),
         'perfiles': Perfil.objects.all(),
     })
+
+
 def administracion(request):
     data = {'titulo': 'Administracion'}
     return render(request, 'core/administracion.html',data)
@@ -249,6 +270,8 @@ def calcular_precios_producto(producto):
     return precio_normal, precio_oferta, precio_subscr, hay_desc_oferta, hay_desc_subscr
 
 def obtener_html_precios_producto(producto):
+
+    
     
     precio_normal, precio_oferta, precio_subscr, hay_desc_oferta, hay_desc_subscr = calcular_precios_producto(producto)
     
@@ -266,3 +289,7 @@ def obtener_html_precios_producto(producto):
         texto_precio += f'{subscr}'
 
     return texto_precio
+
+def salir(request):
+    logout(request)
+    return redirect(home)

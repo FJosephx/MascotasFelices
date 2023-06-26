@@ -71,10 +71,6 @@
             </li>
           </ul>
   
-  
-  
-  
-  
         </div>
         {% if request.path == '/' %}
   
@@ -85,11 +81,30 @@
           <button class="btn btn-outline-success bi bi-search" type="submit"> </button>
         </form>
         {% else %}
+        
         {% endif %}
+
+
+
+        {% if user.is_authenticated %}
+        <form method="post" action="{% url 'salir' %}">
+          {% csrf_token %}
+          <div class="text-end">
+              <button class="btn btn-outline-success bi bi-door-open" type="submit"></button>
+          </div>
+        </form>
+        {% endif %}
+
+        {% if not user.is_authenticated %}
         <div class="text-end">
           <a href="{% url 'inciar_sesion' %}"><button type="button" class="btn btn-outline-primary me-2">Ingresar</button></a>
           <a href="{% url 'registro' %}"><button type="button" class="btn btn-primary">Registrarse</button></a>
         </div>
+
+        {% endif %}
+
+
+
       </div>
     </nav>
 
