@@ -1,0 +1,24 @@
+falta
+- boleta
+    table con los datos de la compra
+- miscompras
+    table con compras asociadas al usuario
+    crea boleta
+- ventas
+    boleta + miscompras
+- admin. usuarios
+    form para administrar los usuarios del sistema
+- misdatos
+    form para actualizar los datos del usuario logeado
+
+
+- navbar
+
+sin authenticar
+    inicio nosotros ingresar registrar ropa
+si esta authenticado como cliente
+    mis datos boleta miscompras carrito
+si esta como administrador
+    panel admin, ventas, admin ususarios, admin productos, admin bodega
+si esta como superusuario
+    panel admin, ventas, admin ususarios, admin productos, admin bodega

@@ -56,34 +56,50 @@
           <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             <li><a href="{% url 'home' %}" class="nav-link px-2 text-secondary">Inicio</a></li>
             <li><a href="{% url 'nosotros' %}" class="nav-link px-2 text-primary">Nosotros</a></li>
+            {% if user.is_authenticated and not user.is_staff and not user.is_superuser %}
+
+            <li><a class="nav-link px-2 text-primary" href="{% url 'carrito' %}">Carrito</a></li>
+            {% endif %}
+
+            <li><a class="nav-link px-2 text-primary" href="{% url 'ropa' %}">Concurso</a></li>
+
+            {% if user.is_authenticated and not user.is_staff and not user.is_superuser %}
+
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Más
+                Hola {{ user.first_name}} {{ user.last_name }}
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'miscompras' %}">Mis compras</a></li>
                 <li><a class="dropdown-item" href="{% url 'boleta' %}">Boleta</a></li>
-                <li><a class="dropdown-item" href="{% url 'ropa' %}">Ropa</a></li>
                 <li><a class="dropdown-item" href="{% url 'misdatos' %}">Mis Datos</a></li>
-                <li><a class="dropdown-item" href="{% url 'carrito' %}">Carrito</a></li>
-                <li><a class="dropdown-item" href="{% url 'administracion' %}">Panel de Administrador</a></li>
+                <li><a class="dropdown-item" href="{% url 'miscompras' %}">Mis compras</a></li>
+
               </ul>
             </li>
+            {% endif %}
+            {% if user.is_authenticated and user.is_staff or user.is_authenticated and user.is_superuser %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Admin.
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'administracion' %}">Panel de Administrador</a></li>
+              
+              </ul>
+            </li>
+            {% endif %}
+
           </ul>
   
         </div>
         {% comment %} {% if request.path == '/' %} {% endcomment %}
-  
+        
         <form class="d-flex pe-3" action="{% url 'home' %}" role="search" method="post">
           {% csrf_token %}
           <input class="form-control me-2" type="search" placeholder="Buscar productos" 
               aria-label="Search" id="buscar" id="buscar" name="buscar">
           <button class="btn btn-outline-success bi bi-search" type="submit"> </button>
         </form>
-        {% comment %} {% else %} {% endcomment %}
-        
-        {% comment %} {% endif %} {% endcomment %}
-
 
 
         {% if user.is_authenticated %}
@@ -116,9 +132,7 @@
     
 
     <!-- FOOTER -->
-    <footer
-      class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top container"
-    >
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top container">
       <p class="col-md-4 mb-0 text-body-secondary">
         © 2023 Mascotas Felices encuentranos en: Moneda 627, Santiago
       </p>

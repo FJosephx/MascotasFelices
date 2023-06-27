@@ -13,6 +13,7 @@ form_precio = {'class':'form-control', 'placeholder':'Ingrese el precio'}
 form_desc = {'class': 'form-control', 'placeholder':'3%'}
 form_descOferta = {'class': 'form-control', 'placeholder':'5%'}
 form_file_imagen = {'id':'id_imagen' ,'class': 'form-control-file form-control form-control-sm', 'title': 'Debe subir una imagen'}
+form_select_bodega = {'class':'form-select form-control form-control-sm'}
 
 form_text_area_registro = {'class': 'form-control form-control-sm', 'rows': 2, 'placeholder':'Ingrese una direccion'}
 
@@ -64,7 +65,7 @@ class BodegaForm(forms.Form):
     )
     producto = forms.ModelChoiceField(
         queryset=Producto.objects.none(), 
-        widget=forms.Select(attrs=form_select),
+        widget=forms.Select(attrs=form_select_bodega),
         label='Producto'
     )
     cantidad = forms.IntegerField(
