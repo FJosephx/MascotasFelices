@@ -191,8 +191,34 @@ def miscompras(request):
     return render(request, 'core/miscompras.html',data)
 
 
-def misdatos(request):
-    data = {'titulo': 'Mis Datos'}
+def misdatos(request,id,accion):
+    if request.method == 'POST':
+        if accion == 'actualizar':
+            form = RegistroClienteForm(request.POST, request.FILES, instance=User.objects.get(id=id))
+        if form.is_valid():
+            user = form.save()
+            
+            form = RegistroClienteForm(instance=user)
+            messages.success(request, f'El usuario "{str(user)}" se logró {accion} correctamente')
+            return redirect(misdatos, 'actualizar', user.id)
+        else:
+            messages.error(request, f'No se pudo {accion} el Producto, pues el formulario no pasó las validaciones básicas')
+            return redirect(misdatos, 'actualizar', id)
+
+    if request.method == 'GET':
+
+        
+        if accion == 'actualizar':
+            form = RegistroClienteForm(instance=User.objects.get(id=id))
+
+
+        else:
+            form = None  # Agregar este caso predeterminado
+
+    usuarios = User.objects.get(id=id)
+
+    data = {'usuarios': usuarios, 'form':form}
+
     return render(request, 'core/misdatos.html',data)
 
 def nosotros(request):
@@ -200,7 +226,12 @@ def nosotros(request):
     return render(request, 'core/nosotros.html',data)
 
 def usuarios(request):
-    data = {'titulo': 'Admin. Usuarios'}
+    usuarios = Perfil.objects.all()
+
+    data = {
+        # 'form': form,
+        'usuarios': usuarios
+    }
     return render(request, 'core/usuarios.html',data)
 
 def obtener_productos(request):
@@ -219,17 +250,7 @@ def ventas(request):
     data = {'titulo': 'Admin. Ventas'}
     return render(request, 'core/ventas.html',data)
 
-def eliminar_producto_en_bodega(request, bodega_id):
-    
-    nombre_producto = Bodega.objects.get(id=bodega_id).producto.nombre
-    eliminado, error = verificar_eliminar_registro(Bodega, bodega_id, True)
-    
-    if eliminado:
-        messages.success(request, f'Se ha eliminado el ID {bodega_id} ({nombre_producto}) de la bodega')
-    else:
-        messages.error(request, error)
 
-    return redirect(bodega)
 
 def admin_productos(request,id, accion):
     

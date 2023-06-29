@@ -11,9 +11,8 @@ falta
 - misdatos
     form para actualizar los datos del usuario logeado
 
-
+listo
 - navbar
-
 sin authenticar
     inicio nosotros ingresar registrar ropa
 si esta authenticado como cliente

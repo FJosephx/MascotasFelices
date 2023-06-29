@@ -1,11 +1,17 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
+{% load custom_filters %}
+{% block titulo %}
+
+Admin. Usuarios
+{% endblock titulo %}
+
 {% block content %}
 
-<!-- formulario de usuario -->
-<h1 class="container">Mantenedor de usuarios</h1>
-
+<div class="container text-center py-0">
+  <h1>Administrador Usuarios</h1>
+</div>
 <!-- formulario de usuario -->
 <form class="row g-4" method="POST" id="formulario1" novalidate>
       <div class="container-fluid">
@@ -176,56 +182,43 @@
 
 
 <!-- Tabla con registro de usuarios -->
-<table class="table container">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Tipo usuario</th>
-              <th>RUT</th>
-              <th>Nombres</th>
-              <th>Apellidos</th>
-              <th>Correo</th>
-              <th>Dirección</th>
-              <th>Con subscripción</th>
-              <th>Imagen</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>34</td>
-              <td>Cliente</td>
-              <td>9.455.847-K</td>
-              <td>Juan</td>
-              <td>Pérez</td>
-              <td>jperez@gmail.com</td>
-              <td>San Juan Bautista 423</td>
-              <td>Si</td>
-              <td>⬛</td>
-            </tr>
-            <tr>
-              <td>35</td>
-              <td>Administrador</td>
-              <td>13.345.678.2</td>
-              <td>Ana</td>
-              <td>Torres</td>
-              <td>atorres@gmail.com</td>
-              <td>San Juan Bautista 423</td>
-              <td>No</td>
-              <td>⬛</td>
-            </tr>
-            <tr>
-              <td>36</td>
-              <td>Cliente</td>
-              <td>26.846.927-K</td>
-              <td>Pedro</td>
-              <td>González</td>
-              <td>pgonzalez@gmail.com</td>
-              <td>San Juan Bautista 423</td>
-              <td>No</td>
-              <td>⬛</td>
-            </tr>
-          </tbody>
-</table>
+
+{% if usuarios %}
+  <div class="table-responsive">
+    <table id="tabla-principal" class="container table table-sm table-hover">
+      <thead>
+          <tr>
+              <th> ID </th>
+              <th> Rut </th>
+              <th> Nombre </th>
+              <th> Apellido </th>
+              <th> Email </th>
+              <th> Foto Perfil </th>
+              <th> Editar </th>
+          </tr> 
+      </thead>
+      <tbody class="table-group-divider">
+          {% for perfil in usuarios %}
+              <tr>
+                  <td> {{ perfil.id }} </td>
+                  <td> {{ perfil.rut }} </td>
+                  <td> {{ perfil.usuario.first_name }} </td>
+                  <td> {{ perfil.usuario.last_name }} </td>
+                  <td> {{ perfil.usuario.email }} </td>
+                  <td>
+                    <img src="/media/{{ perfil.imagen }}" style="height: 150px;"  alt="">
+                  </td>
+                  <td>
+                    <a href="" class="btn btn-primary btn-lg"><i class="bi bi-tools"></i>
+
+                  </td>
+              </tr>
+          {% endfor %}
+      </tbody>
+    </table> 
+  </div>
+{% endif %}
+
   
   
 
