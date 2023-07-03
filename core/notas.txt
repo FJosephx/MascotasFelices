@@ -21,3 +21,23 @@ si esta como administrador
     panel admin, ventas, admin ususarios, admin productos, admin bodega
 si esta como superusuario
     panel admin, ventas, admin ususarios, admin productos, admin bodega
+
+
+feedback profe
+
+1 poblar base de datos
+2 botones ficha producto al hacer click en comprar o agregar carrito
+    redirect a login con un mensaje de para comprar necesitas estar registrado
+3 falta foto nosotros
+4 cae ropa
+5 en registro al ingresar una contraseña del 1 al 8
+    este no hace nada y no muestra un mensaje de error de contraseña
+
+6 el usuario puede mostrar misdatos y miscompras
+7 misdatos tiene que poder editar sus datos
+    ya que se usan perfil y user que son 2 modelos diferentes
+8 cambiar lo que hace al guardar un producto nuevo
+    ya que cuando lo guarda redirige a un producto nuevo
+9 cuando se edita el producto la imagen se tiene que quedar
+    y no pedir que se suba otra nueva
+10 falta crud de boleta y ventas
