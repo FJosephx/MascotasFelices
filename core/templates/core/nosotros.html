@@ -1,6 +1,9 @@
 
 {% extends 'core/base.html' %}
 {% load static %}
+{% block titulo %}
+Nosotros
+{% endblock titulo %}
 
 {% block content %}
 
@@ -49,7 +52,7 @@
       <div class="col-md-4">
         <div class="card-xs">
           <div class="card" style="width: 18rem;">
-            <img src="img/perfil.png" class="card-img-top" alt="...">
+            <img src="{% static 'core/img/images/perfil_1.jpg' %}" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">Bastián Astudillo</h5>
             </div>
@@ -59,7 +62,7 @@
       <div class="col-md-4">
         <div class="card-xs">
           <div class="card" style="width: 18rem;">
-            <img src="img/perfil.png" class="card-img-top" alt="...">
+            <img src="{% static 'core/img/images/perfil_2.jpg' %}" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">Luis Barboza</h5>
             </div>
@@ -69,7 +72,7 @@
       <div class="col-md-4">
         <div class="card-xs">
           <div class="card" style="width: 18rem;">
-            <img src="img/perfil.png" class="card-img-top" alt="...">
+            <img src="{% static 'core/img/images/perfil_3.jpg' %}" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">Franco Unda</h5>
             </div>
