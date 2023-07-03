@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import obtener_productos,eliminar_producto_en_bodega,salir,admin_productos,ventas, usuarios,home, ropa, ficha, misdatos, nosotros, registro, inciar_sesion, administracion, bodega, boleta, miscompras, carrito
+from .views import obtener_productos,eliminar_producto_en_bodega,salir,admin_productos,ventas, usuarios,home, ropa, ficha, misdatos, nosotros, registro, iniciar_sesion, administracion, bodega, boleta, miscompras, carrito
 
 
 urlpatterns = [
@@ -7,7 +7,7 @@ urlpatterns = [
     path('ropa', ropa, name='ropa'),
     path('ficha/<producto_id>', ficha, name='ficha'),
     path('registro', registro, name='registro'),
-    path('inciar_sesion', inciar_sesion, name='inciar_sesion'),
+    path('iniciar_sesion', iniciar_sesion, name='iniciar_sesion'),
     path('administracion', administracion, name='administracion'),
     path('bodega', bodega, name="bodega"),
     path('boleta', boleta, name='boleta'),

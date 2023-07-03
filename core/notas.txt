@@ -28,6 +28,7 @@ feedback profe
 1 poblar base de datos
 2 botones ficha producto al hacer click en comprar o agregar carrito
     redirect a login con un mensaje de para comprar necesitas estar registrado
+    listo, ahora vamos agregar athenticacion
 3 falta foto nosotros
 4 cae ropa
 5 en registro al ingresar una contraseña del 1 al 8

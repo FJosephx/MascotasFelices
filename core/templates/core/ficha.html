@@ -5,7 +5,10 @@
 {{ nombre }}
 {% endblock %}
 
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'core/css/style_ficha.css' %}" />
 
+{% endblock stylesheet %}
 {% block content %}
 
 <div class="container">
@@ -29,8 +32,23 @@
           <p>
             {{ html_stock|safe }}
         </p>
-          <a href="registro.html"><button class="btn btn-primary btn-lg mt-3">Comprar</button></a>
-          <a href="carrito.html"><button class="btn btn-outline-primary btn-lg mt-3">Agregar al carrito <span><i class="bi bi-cart"></i></span></button></a>
+          <!-- iteracion para redirigir
+            a checkout si es usuario logeado
+            disabled si es admin
+            y registro si no esta logeado -->
+          {% if html_estado|safe == '<span class="text-danger"> AGOTADO </span>' %}
+
+          <!-- falta hacer que el boton disabled tenga el cursor not-allowed -->
+          <a class="deshabilidato"><button class="btn btn-primary btn-lg mt-3 disabled" >Comprar</button></a>
+          <a ><button class="btn btn-outline-primary btn-lg mt-3 disabled" >Agregar al carrito <span><i class="bi bi-cart"></i></span></button></a>
+
+
+          {% else %}
+
+          <a href="{% url 'iniciar_sesion' %}?comprar=True"><button class="btn btn-primary btn-lg mt-3">Comprar</button></a>
+          <a href="{% url 'iniciar_sesion' %}?agregar_carrito=True"><button class="btn btn-outline-primary btn-lg mt-3">Agregar al carrito <span><i class="bi bi-cart"></i></span></button></a>
+          {% endif %}
+
         </div>
       </div>
 </div>

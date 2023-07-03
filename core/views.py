@@ -114,11 +114,16 @@ def registro(request):
                 direccion=direccion, 
                 subscrito=subscrito,
                 imagen=request.FILES['imagen'])
-            return redirect(inciar_sesion)
+            return redirect(iniciar_sesion)
             
     return render(request, "core/registro.html", {'form': form})
 
-def inciar_sesion(request):
+def iniciar_sesion(request):
+    comprar = request.GET.get('comprar', False)
+    agregar_carrito = request.GET.get('agregar_carrito', False)
+
+
+    mensaje = ""
 
     if request.method == "POST":
         form = IngresarForm(request.POST)
@@ -134,10 +139,18 @@ def inciar_sesion(request):
                     login(request, user)
                     return redirect(home)
             messages.error(request, 'La cuenta o la password no son correctos')
+
+    if comprar:
+        mensaje = 'Para comprar, inicia sesión'
+    elif agregar_carrito:
+        mensaje = "Para agregar al carrito, inicia sesión"
+    else:
+        mensaje = "Inicia sesión"
     
     return render(request, "core/iniciar_sesion.html", {
         'form':  IngresarForm(),
         'perfiles': Perfil.objects.all(),
+        'mensaje':mensaje
     })
 
 
