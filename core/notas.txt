@@ -40,6 +40,7 @@ feedback profe
     
 5 en registro al ingresar una contraseña del 1 al 8
     este no hace nada y no muestra un mensaje de error de contraseña
+    listo, se quiere intentar personalizar los menssajes de error de django
 
 6 el usuario puede mostrar misdatos y miscompras
 7 misdatos tiene que poder editar sus datos
