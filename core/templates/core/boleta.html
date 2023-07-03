@@ -1,80 +1,75 @@
 {% extends 'core/base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block content %}
+    <h1 class="container mt-4 text-center">Boleta N° {{ boleta.nro_boleta }}</h1>
 
-<h1 class="container">Detalle de boleta 535</h1>
-<div class="container">
 
-      <div class="row">
-        <div class="col">
-          <div class="order-tracking completed">
-            <span class="is-complete"></span>
-            <p>Vendido<br><span>Lun, June 24 10:15</span></p>
-          </div>
-        </div>
-        <div class="col">
-          <div class="order-tracking completed">
-            <span class="is-complete"></span>
-            <p>Despachado<br><span>Mar, June 25 15:12</span></p>
-          </div>
-        </div>
-        <div class="col">
-          <div class="order-tracking">
-            <span class="is-complete"></span>
-            <p>Entregado<br><span> --</span></p>
-          </div>
-        </div>
-      </div>
-</div>
     
-
-
-
-<div class="container">
-          <table class="container">
-          <thead>
+    <div>
+        Venta: {{ boleta.fecha_venta|formatear_fecha }} | Despacho: {{ boleta.fecha_despacho|formatear_fecha }} | Entrega: {{ boleta.fecha_entrega|formatear_fecha }}
+    </div>
+    
+    <table id="tabla-principal" class="table table-hover">
+        <thead>
             <tr>
-              <th>Categoría</th>
-              <th>Producto</th>
-              <th>Precio</th>
-              <th>% Subscriptor</th>
-              <th>% Oferta</th>
-              <th>% Desc Total</th>
-              <th>Descuentos</th>
-              <th>Precio a Pagar</th>
+                <th> Categoría </th>
+                <th> Producto </th>
+                <th> Precio </th>
+                <th> % Descto <br> Subscriptor </th>
+                <th> % Descto <br> Oferta </th>
+                <th> % Descto <br> Total </th>
+                <th class="text-end"> Descuentos </th>
+                <th class="text-end"> Precio a pagar </th>
             </tr>
-          </thead>
-          <tbody>
+        </thead>
+        <tbody>
+            {% for item in detalle_boleta %}
+                <tr>
+                    <td> {{ item.bodega.producto.categoria.nombre }} </td>
+                    <td> {{ item.bodega.producto.nombre }} </td>
+                    <td> {{ item.precio|formatear_dinero }} </td>
+                    <td> {{ item.descuento_subscriptor|formatear_porcentaje }} </td>
+                    <td> {{ item.descuento_oferta|formatear_porcentaje }} </td>
+                    <td> {{ item.descuento_total|formatear_porcentaje }} </td>
+                    <td class="text-end"> {{ item.descuentos|formatear_dinero }} </td>
+                    <td class="text-end"> {{ item.precio_a_pagar|formatear_dinero }} </td>
+                </tr>
+            {% endfor %}
+        <tfoot>
             <tr>
-              <td>Alimentos</td>
-              <td>PeluCrunch</td>
-              <td>$5.000</td>
-              <td>10%</td>
-              <td>25%</td>
-              <td>700</td>
-              <td>7300</td>
-              <td>8000</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="fw-bold"> Precio sin IVA </td>
+                <td class="fw-bold text-end"> {{ boleta.monto_sin_iva|formatear_dinero }} </td>
             </tr>
             <tr>
-              <td>Accesorios</td>
-              <td>Juguete Pelota</td>
-              <td>$2.500</td>
-              <td>5%</td>
-              <td>10%</td>
-              <td>700</td>
-              <td>7300</td>
-              <td>8000</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="fw-bold"> Valor del IVA (19%) </td>
+                <td class="fw-bold text-end"> {{ boleta.iva|formatear_dinero }} </td>
             </tr>
-          </tbody>
-        </table>
-
-</div>
-<div class="container d-flex align-items-end flex-column">
-      <div>Precio sin IVA <span id="precio">$ 13 540</span></div>
-      <div>Valor del IVA (19%) <span id="precio">$ 2 543</span></div>
-  <div>Total a pagar <span id="precio">$ 16 950</span></div></div>
-</div>
-  
-
-{% endblock %}   
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="fw-bold"> Total a pagar </td>
+                <td class="fw-bold text-end"> {{ boleta.total_a_pagar|formatear_dinero }} </td>
+            </tr>
+        </tfoot>
+        </tbody>
+    </table>
+    
+{% endblock content %}

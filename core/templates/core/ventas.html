@@ -1,57 +1,61 @@
 {% extends 'core/base.html' %}
 {% load static %}
+{% block titulo %}
+Historial de Ventas
+{% endblock titulo %}
+{% load custom_filters %}
 
 {% block content %}
     
-<h1 class="container">Historial de ventas</h1>
-<table class="container">
-        <thead>
-          <tr>
-            <th>Nro boleta</th>
-            <th>Fecha</th>
-            <th>Nombre cliente</th>
-            <th>Subscrito</th>
-            <th>Monto total</th>
-            <th>Estado actual</th>
-            <th>Detalle</th>
-            <th>Cambiar estado</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>425</td>
-            <td>1/1/2022</td>
-            <td>Claudio Parra</td>
-            <td>No</td>
-            <td>$15.000</td>
-            <td>Entregado</td>
+  <h1 class="container mt-4 text-center">Historial de Ventas</h1>
 
-            <td><a href="boleta.html">Ver detalle</a></td>
-            <td><a href="#">Anulado</a> <a href="#">Vendido</a> <a href="#">Despachado</a> <a href="#">Entregado</a></td>
-          </tr>
-          <tr>
-            <td>535</td>
-            <td>5/2/2022</td>
-            <td>Ronny Radke</td>
-            <td>Si</td>
-            <td>$10.000</td>
-            <td>Despachado</td>
-
-            <td><a href="boleta.html">Ver detalle</a></td>
-            <td><a href="#">Anulado</a> <a href="#">Vendido</a> <a href="#">Despachado</a> <a href="#">Entregado</a></td>
-          </tr>
-          <tr>
-            <td>675</td>
-            <td>7/3/2022</td>
-            <td>Billy Joe Amstrong</td>
-            <td>No</td>
-            <td>$12.000</td>
-            <td>Vendido</td>
-            <td><a href="boleta.html">Ver detalle</a></td>
-            <td><a href="#">Anulado</a> <a href="#">Vendido</a> <a href="#">Despachado</a> <a href="#">Entregado</a></td>
-          </tr>
-        </tbody>
-</table>
+  <table id="tabla-principal" class="table table-hover">
+    <thead>
+        <tr>
+            <th> Nro boleta </th>
+            <th> Cliente </th>
+            <th> Venta </th>
+            <th> Despacho </th>
+            <th> Entrega </th>
+            <th> Subscrito </th>
+            <th> Monto total </th>
+            <th> Estado actual </th>
+            <th> Detalle </th>
+            <th> Cambiar estado </th>
+        </tr>
+    </thead> 
+    <tbody>
+        {% for boleta in historial %}
+            {% if boleta.estado == 'Anulado' %}
+                <tr class="letra-boleta-anulada"> 
+            {% else %}
+                <tr>
+            {% endif %}
+                <td> {{ boleta.nro_boleta }} </td>
+                <td> {{ boleta.nom_cliente }} </td>
+                <td> {{ boleta.fecha_venta|formatear_fecha }} </td>
+                <td> {{ boleta.fecha_despacho|formatear_fecha }} </td>
+                <td> {{ boleta.fecha_entrega|formatear_fecha }} </td>
+                <td> {{ boleta.subscrito }} </td>
+                <td> {{ boleta.total_a_pagar }} </td>
+                <td> {{ boleta.estado }} </td>
+                <td>
+                    <a href="{% url 'boleta' boleta.nro_boleta %}" class="btn btn-sm btn-primary">Detalle</a>
+                </td>
+                <td>
+                    <span>
+                        <div class="btn-group">
+                            <a href="{% url 'cambiar_estado_boleta' boleta.nro_boleta 'Anulado' %}" class="btn btn-sm btn-danger">Anular</a>
+                            <a href="{% url 'cambiar_estado_boleta' boleta.nro_boleta 'Vendido' %}" class="btn btn-sm btn-success">Vender</a>
+                            <a href="{% url 'cambiar_estado_boleta' boleta.nro_boleta 'Despachado' %}" class="btn btn-sm btn-primary">Despachar</a>
+                            <a href="{% url 'cambiar_estado_boleta' boleta.nro_boleta 'Entregado' %}" class="btn btn-sm btn-secondary">Entregar</a>
+                        </div>
+                    </span>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>       
+  </table>
 
 
 

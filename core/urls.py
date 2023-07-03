@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import obtener_productos,eliminar_producto_en_bodega,salir,admin_productos,ventas, usuarios,home, ropa, ficha, misdatos, nosotros, registro, iniciar_sesion, administracion, bodega, boleta, miscompras, carrito
+from .views import cambiar_estado_boleta, poblar,obtener_productos,eliminar_producto_en_bodega,salir,admin_productos,ventas, usuarios,home, ropa, ficha, misdatos, nosotros, registro, iniciar_sesion, administracion, bodega, boleta, miscompras, carrito
 
 
 urlpatterns = [
+    
     path('', home, name='home'),
     path('ropa', ropa, name='ropa'),
     path('ficha/<producto_id>', ficha, name='ficha'),
@@ -21,10 +22,12 @@ urlpatterns = [
     path('admin_productos/<accion>/<id>', admin_productos, name="admin_productos"),
 
     path('ventas', ventas, name="ventas"),
-
+    path('poblar', poblar, name='poblar'),
     path('salir', salir, name='salir'),
     path('obtener_productos', obtener_productos, name='obtener_productos'),
-
+path('ventas', ventas, name='ventas'),
+    path('boleta/<nro_boleta>', boleta, name='boleta'),
+    path('cambiar_estado_boleta/<nro_boleta>/<estado>', cambiar_estado_boleta, name='cambiar_estado_boleta'),
     path('eliminar_producto_en_bodega/<bodega_id>', eliminar_producto_en_bodega, name='eliminar_producto_en_bodega'),
 
 ]

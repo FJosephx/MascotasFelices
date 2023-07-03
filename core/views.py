@@ -1,17 +1,16 @@
-from django.shortcuts import render, redirect
-from .models import Categoria, Producto, Boleta, Carrito, DetalleBoleta, Bodega, Perfil
-from .forms import ProductoForm, IngresarForm, RegistroClienteForm, BodegaForm
+from datetime import date
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
-# , BodegaForm, RegistroClienteForm, IngresarForm
-import locale
-from core.templatetags.custom_filters import formatear_dinero, formatear_numero
-from .tools import eliminar_registro, verificar_eliminar_registro
-from datetime import date
-
-from django.contrib import messages
-from django.http import JsonResponse
+from .models import Categoria, Producto, Boleta, Carrito, DetalleBoleta, Bodega, Perfil
+from .forms import ProductoForm, BodegaForm, RegistroClienteForm, IngresarForm
+from .zpoblar import poblar_bd
 from django.db.models import ProtectedError
+from django.http import JsonResponse
+from django.contrib import messages
+from .tools import eliminar_registro, verificar_eliminar_registro
+from core.templatetags.custom_filters import formatear_dinero, formatear_numero
+
 # Create your views here.
 
 # def home(request):
@@ -26,6 +25,7 @@ from django.db.models import ProtectedError
 #     return render(request, 'core/index.html', data)
 
 def home(request):
+    
     buscar = ''
     if request.method == 'POST':
         buscar = request.POST.get('buscar')
@@ -191,18 +191,61 @@ def bodega(request):
     # data = {'titulo': 'Bodega'}
     # return render(request, 'core/bodega.html',data)
 
-def boleta(request):
-    data = {'titulo': 'Boleta'}
-    return render(request, 'core/boleta.html',data)
+def boleta(request, nro_boleta):
+    boleta = Boleta.objects.get(nro_boleta=nro_boleta)
+    detalle_boleta = DetalleBoleta.objects.filter(boleta=boleta)
+    datos = { 
+        'boleta': boleta, 
+        'detalle_boleta': detalle_boleta 
+    }
+    return render(request, 'core/boleta.html', datos)
 
-def carrito(request):
-    data = {'titulo': 'Carrito'}
-    return render(request, 'core/carrito.html',data)
+def cambiar_estado_boleta(request, nro_boleta, estado):
+    boleta = Boleta.objects.get(nro_boleta=nro_boleta)
+    if estado == 'Anulado':
+        boleta.fecha_venta = date.today()
+        boleta.fecha_despacho = None
+        boleta.fecha_entrega = None
+    else:
+        if estado == 'Vendido':
+            boleta.fecha_venta = date.today()
+            boleta.fecha_despacho = None
+            boleta.fecha_entrega = None
+        elif estado == 'Despachado':
+            boleta.fecha_despacho = date.today()
+            boleta.fecha_entrega = None
+        elif estado == 'Entregado':
+            if boleta.estado == 'Vendido':
+                boleta.fecha_despacho = date.today()
+                boleta.fecha_entrega = date.today()
+            elif boleta.estado == 'Despachado':
+                boleta.fecha_entrega = date.today()
+            elif boleta.estado == 'Entregado':
+                boleta.fecha_entrega = date.today()
+    boleta.estado = estado
+    boleta.save()
+    return redirect(ventas)
 
 def miscompras(request):
-    data = {'titulo': 'Mis Compras'}
-    return render(request, 'core/miscompras.html',data)
 
+    usuario = User.objects.get(username='user_test')
+    perfil = Perfil.objects.get(usuario=usuario)
+
+    boletas = Boleta.objects.filter(cliente=perfil)
+    historial =[]
+    for boleta in boletas:
+        boleta_historial = {
+            'nro_boleta': boleta.nro_boleta,
+            'fecha_venta': boleta.fecha_venta,
+            'fecha_despacho': boleta.fecha_despacho,
+            'fecha_entrega': boleta.fecha_entrega,
+            'total_a_pagar': boleta.total_a_pagar,
+            'estado': boleta.estado,
+        }
+        historial.append(boleta_historial)
+    return render(request, 'core/miscompras.html', { 
+        'historial': historial 
+    })
 
 def misdatos(request,id,accion):
     if request.method == 'POST':
@@ -259,11 +302,25 @@ def obtener_productos(request):
     ]
     return JsonResponse(data, safe=False)
 
+
 def ventas(request):
-    data = {'titulo': 'Admin. Ventas'}
-    return render(request, 'core/ventas.html',data)
-
-
+    boletas = Boleta.objects.all()
+    historial =[]
+    for boleta in boletas:
+        boleta_historial = {
+            'nro_boleta': boleta.nro_boleta,
+            'nom_cliente': f'{boleta.cliente.usuario.first_name} {boleta.cliente.usuario.last_name}',
+            'fecha_venta': boleta.fecha_venta,
+            'fecha_despacho': boleta.fecha_despacho,
+            'fecha_entrega': boleta.fecha_entrega,
+            'subscrito': 'Sí' if boleta.cliente.subscrito else 'No',
+            'total_a_pagar': boleta.total_a_pagar,
+            'estado': boleta.estado,
+        }
+        historial.append(boleta_historial)
+    return render(request, 'core/ventas.html', { 
+        'historial': historial 
+    })
 
 def admin_productos(request,id, accion):
     
@@ -390,3 +447,59 @@ def eliminar_producto_en_bodega(request, bodega_id):
         messages.error(request, error)
 
     return redirect(bodega)
+
+
+def poblar(request):
+    poblar_bd()
+    return redirect(home)
+
+def carrito(request):
+
+    detalle_carrito = Carrito.objects.filter(cliente=request.user.perfil)
+
+    total_a_pagar = 0
+    for item in detalle_carrito:
+        total_a_pagar += item.precio_a_pagar
+    monto_sin_iva = int(round(total_a_pagar / 1.19))
+    iva = total_a_pagar - monto_sin_iva
+
+    return render(request, 'core/carrito.html', {
+        'detalle_carrito': detalle_carrito,
+        'monto_sin_iva': monto_sin_iva,
+        'iva': iva,
+        'total_a_pagar': total_a_pagar,
+    })
+
+
+def eliminar_producto_en_carrito(request, carrito_id):
+
+    Carrito.objects.get(id=carrito_id).delete()
+
+    return redirect(carrito)
+
+
+def agregar_producto_al_carrito(request, producto_id):
+
+    perfil = request.user.perfil
+    producto = Producto.objects.get(id=producto_id)
+
+    precio_normal, precio_oferta, precio_subscr, hay_desc_oferta, hay_desc_subscr = calcular_precios_producto(producto)
+
+    precio = producto.precio
+    descuento_subscriptor = producto.descuento_subscriptor if perfil.subscrito else 0
+    descuento_total=producto.descuento_subscriptor + producto.descuento_oferta if perfil.subscrito else producto.descuento_oferta
+    precio_a_pagar = precio_subscr if perfil.subscrito else precio_oferta
+    descuentos = precio - precio_subscr if perfil.subscrito else precio - precio_oferta
+
+    Carrito.objects.create(
+        cliente=perfil,
+        producto=producto,
+        precio=precio,
+        descuento_subscriptor=descuento_subscriptor,
+        descuento_oferta=producto.descuento_oferta,
+        descuento_total=descuento_total,
+        descuentos=descuentos,
+        precio_a_pagar=precio_a_pagar
+    )
+
+    return redirect(ficha, producto_id)

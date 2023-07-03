@@ -1,63 +1,47 @@
 
 {% extends 'core/base.html' %}
 {% load static %}
+{% block titulo %}
+Mis Compras
+{% endblock titulo %}
+{% load custom_filters %}
 
 {% block content %}
 <!-- Tabla con historial -->
-<div class="container">
-    <h1>Historial de compras <span><i class="bi bi-cart"></i>
-    </span></h1>
-</div>
-<table class="container">
-      <thead>
-        <tr>
-          <th>Nro boleta</th>
-          <th>Fecha venta</th>
-          <th>Fecha despacho</th>
-          <th>Fecha entrega</th>
-          <th>Monto total</th>
-          <th>Estado actual</th>
-          <th>Opciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>425</td>
-          <td>1/1/2022</td>
-          <td>1/1/2022</td>
-          <td>1/1/2022</td>
-          <td>$15.000</td>
-          <td>Entregado</td>
-          <td><a href="#">Ver detalle</a></td>
-        </tr>
-        <tr>
-          <td>535</td>
-          <td>5/2/2022</td>
-          <td>5/2/2022</td>
-          <td>5/2/2022</td>
-          <td>$10.000</td>
-          <td>Despachado</td>
-          <td><a href="boleta.html">Ver detalle</a></td>
-        </tr>
-        <tr>
-          <td>675</td>
-          <td>7/3/2022</td>
-          <td>7/3/2022</td>
-          <td>7/3/2022</td>
-          <td>$12.000</td>
-          <td>Vendido</td>
-          <td><a href="#">Ver detalle</a></td>
-        </tr>
-        <tr>
-          <td>734</td>
-          <td>2/4/2022</td>
-          <td>2/4/2022</td>
-          <td>2/4/2022</td>
-          <td>$7.000</td>
-          <td>Entregado</td>
-          <td><a href="#">Ver detalle</a></td>
-        </tr>
-      </tbody>
+<h1 class="container mt-4 text-center">Mis Compras Anterories</h1>
+
+<table id="tabla-principal" class="table table-hover">
+  <thead>
+      <tr>
+          <th> Nro boleta </th>
+          <th> Venta </th>
+          <th> Despacho </th>
+          <th> Entrega </th>
+          <th> Monto total </th>
+          <th> Estado actual </th>
+          <th> Opciones </th>
+      </tr>
+  </thead> 
+  <tbody>
+      {% for boleta in historial %}
+          {% if boleta.estado == 'Anulado' %}
+              <tr class="letra-boleta-anulada"> 
+          {% else %}
+              <tr>
+          {% endif %}
+              <td> {{ boleta.nro_boleta }} </td>
+              <td> {{ boleta.fecha_venta|formatear_fecha }} </td>
+              <td> {{ boleta.fecha_despacho|formatear_fecha }} </td>
+              <td> {{ boleta.fecha_entrega|formatear_fecha }} </td>
+              <td> {{ boleta.total_a_pagar }} </td>
+              <td> {{ boleta.estado }} </td>
+              <td>
+                  <a href="{% url 'boleta' boleta.nro_boleta %}" class="btn btn-sm btn-primary">Detalle</a>
+              </td>
+          </tr>
+      {% endfor %}
+  </tbody>       
 </table>
+
     
 {% endblock %}   

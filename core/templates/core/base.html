@@ -70,7 +70,6 @@
                 Hola {{ user.first_name}} {{ user.last_name }}
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'boleta' %}">Boleta</a></li>
                 <li><a class="dropdown-item" href="{% url 'misdatos' 'actualizar' user.id %}">Mis Datos</a></li>
                 <li><a class="dropdown-item" href="{% url 'miscompras' %}">Mis compras</a></li>
 

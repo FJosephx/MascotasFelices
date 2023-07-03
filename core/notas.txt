@@ -43,6 +43,7 @@ feedback profe
     listo, se quiere intentar personalizar los menssajes de error de django
 
 6 el usuario puede mostrar misdatos y miscompras
+    listo, se elimino boleta
 7 misdatos tiene que poder editar sus datos
     ya que se usan perfil y user que son 2 modelos diferentes
 8 cambiar lo que hace al guardar un producto nuevo
