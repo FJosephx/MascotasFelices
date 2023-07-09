@@ -77,7 +77,7 @@ class Perfil(models.Model):
         ('Administrador', 'Administrador'),
         ('Superusuario', 'Superusuario'),
     ]
-    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     tipo_usuario = models.CharField(
         choices=USUARIO_CHOICES,
         max_length=50,
@@ -101,12 +101,7 @@ class Perfil(models.Model):
         if self.tipo_usuario == 'Cliente':
             subscrito = ' subscrito' if self.subscrito else ' no subscrito'
         return f'{self.usuario.first_name} {self.usuario.last_name} (ID {self.id} - {self.tipo_usuario}{subscrito})'
-    
-    def acciones():
-        return {
-            'accion_eliminar': 'eliminar el Perfil',
-            'accion_actualizar': 'actualizar el Perfil'
-        }
+
     
 class Carrito(models.Model):
     cliente = models.ForeignKey(Perfil, on_delete=models.DO_NOTHING)

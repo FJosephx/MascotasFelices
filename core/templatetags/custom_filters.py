@@ -30,3 +30,6 @@ def formatear_fecha(value):
     else:
         value = value.strftime("%d/%m/%Y")
     return f'{value}'
+@register.filter
+def add_class(field, css_class):
+    return field.as_widget(attrs={'class': css_class})

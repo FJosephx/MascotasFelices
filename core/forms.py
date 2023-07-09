@@ -135,3 +135,14 @@ class RegistroClienteForm(UserCreationForm):
 
         self.fields['password1'].label = 'Ingrese Contraseña'
         self.fields['password2'].label = 'Repita la Contraseña'
+        
+class PerfilUsuarioForm(Form):
+
+    first_name = forms.CharField(max_length=150, required=True, label="Nombres",)
+    last_name = forms.CharField(max_length=150, required=True, label="Apellidos")
+    email = forms.CharField(max_length=254, required=True, label="Correo")
+    rut = forms.CharField(max_length=80, required=False, label="Rut")
+    direccion = forms.CharField(max_length=80, required=False, label="Dirección")
+
+    class Meta:
+        fields = '__all__'

@@ -1,15 +1,17 @@
 from datetime import date
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.models import User
+from typing import Awaitable
 from django.contrib.auth import login, logout, authenticate
-from .models import Categoria, Producto, Boleta, Carrito, DetalleBoleta, Bodega, Perfil
-from .forms import ProductoForm, BodegaForm, RegistroClienteForm, IngresarForm
+from django.contrib.auth.models import User
+from .models import Producto, Boleta, Carrito, DetalleBoleta, Bodega, Perfil
+from .forms import ProductoForm,PerfilUsuarioForm, BodegaForm, RegistroClienteForm, IngresarForm
 from .zpoblar import poblar_bd
 from django.db.models import ProtectedError
 from django.http import JsonResponse
 from django.contrib import messages
 from .tools import eliminar_registro, verificar_eliminar_registro
 from core.templatetags.custom_filters import formatear_dinero, formatear_numero
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -108,7 +110,7 @@ def registro(request):
             direccion = form.cleaned_data['direccion']
             subscrito = form.cleaned_data['subscrito']
             Perfil.objects.create(
-                usuario=user, 
+                user=user, 
                 tipo_usuario='Cliente', 
                 rut=rut, 
                 direccion=direccion, 
@@ -228,8 +230,8 @@ def cambiar_estado_boleta(request, nro_boleta, estado):
 
 def miscompras(request):
 
-    usuario = User.objects.get(username='user_test')
-    perfil = Perfil.objects.get(usuario=usuario)
+    user = User.objects.get(username='user_test')
+    perfil = Perfil.objects.get(user=user)
 
     boletas = Boleta.objects.filter(cliente=perfil)
     historial =[]
@@ -247,35 +249,32 @@ def miscompras(request):
         'historial': historial 
     })
 
-def misdatos(request,id,accion):
+def misdatos(request):
+    data = {"mesg": "", "form": PerfilUsuarioForm}
+
     if request.method == 'POST':
-        if accion == 'actualizar':
-            form = RegistroClienteForm(request.POST, request.FILES, instance=User.objects.get(id=id))
+        form = PerfilUsuarioForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            
-            form = RegistroClienteForm(instance=user)
-            messages.success(request, f'El usuario "{str(user)}" se logró {accion} correctamente')
-            return redirect(misdatos, 'actualizar', user.id)
-        else:
-            messages.error(request, f'No se pudo {accion} el Producto, pues el formulario no pasó las validaciones básicas')
-            return redirect(misdatos, 'actualizar', id)
+            user = request.user
+            user.first_name = request.POST.get("first_name")
+            user.last_name = request.POST.get("last_name")
+            user.email = request.POST.get("email")
+            user.save()
+            perfil = Perfil.objects.get(user=user)
+            perfil.rut = request.POST.get("rut")
+            perfil.direccion = request.POST.get("direccion")
+            perfil.save()
+            data["mesg"] = "¡Sus datos fueron actualizados correctamente!"
 
-    if request.method == 'GET':
-
-        
-        if accion == 'actualizar':
-            form = RegistroClienteForm(instance=User.objects.get(id=id))
-
-
-        else:
-            form = None  # Agregar este caso predeterminado
-
-    usuarios = User.objects.get(id=id)
-
-    data = {'usuarios': usuarios, 'form':form}
-
-    return render(request, 'core/misdatos.html',data)
+    perfil = Perfil.objects.get(user=request.user)
+    form = PerfilUsuarioForm()
+    form.fields['first_name'].initial = request.user.first_name
+    form.fields['last_name'].initial = request.user.last_name
+    form.fields['email'].initial = request.user.email
+    form.fields['rut'].initial = perfil.rut
+    form.fields['direccion'].initial = perfil.direccion
+    data["form"] = form
+    return render(request, "core/misdatos.html", data)
 
 def nosotros(request):
     data = {'titulo': 'Nosotros'}
@@ -309,7 +308,7 @@ def ventas(request):
     for boleta in boletas:
         boleta_historial = {
             'nro_boleta': boleta.nro_boleta,
-            'nom_cliente': f'{boleta.cliente.usuario.first_name} {boleta.cliente.usuario.last_name}',
+            'nom_cliente': f'{boleta.cliente.user.first_name} {boleta.cliente.usuario.last_name}',
             'fecha_venta': boleta.fecha_venta,
             'fecha_despacho': boleta.fecha_despacho,
             'fecha_entrega': boleta.fecha_entrega,
@@ -326,7 +325,7 @@ def admin_productos(request,id, accion):
     
 
     if request.method == 'POST':
-        
+    
         if accion == 'crear':
             form = ProductoForm(request.POST, request.FILES)
 
