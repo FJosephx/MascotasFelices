@@ -100,7 +100,7 @@ class Perfil(models.Model):
         subscrito = ''
         if self.tipo_usuario == 'Cliente':
             subscrito = ' subscrito' if self.subscrito else ' no subscrito'
-        return f'{self.usuario.first_name} {self.usuario.last_name} (ID {self.id} - {self.tipo_usuario}{subscrito})'
+        return f'{self.user.first_name} {self.user.last_name} (ID {self.id} - {self.tipo_usuario}{subscrito})'
 
     
 class Carrito(models.Model):

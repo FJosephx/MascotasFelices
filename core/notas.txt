@@ -59,7 +59,8 @@ feedback profe
     listo,crud listo falta algunos detalles
 
 11 falta carrito para ET
-
+    
 12 falta cambiar contraseña ET
+    listo
 
 13 implementar webpay ET

@@ -13,6 +13,9 @@ from .tools import eliminar_registro, verificar_eliminar_registro
 from core.templatetags.custom_filters import formatear_dinero, formatear_numero
 from django.views.decorators.csrf import csrf_exempt
 
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+
 # Create your views here.
 
 # def home(request):
@@ -25,6 +28,23 @@ from django.views.decorators.csrf import csrf_exempt
 #     data = {'titulo': 'Mascotas Felices', 
 #             "list": Producto.objects.all().order_by('id'),}
 #     return render(request, 'core/index.html', data)
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Tu contraseña ha sido cambiada con éxito.')
+            return redirect('password_cambiada')
+        else:
+            messages.error(request, 'Por favor corrige los errores a continuación.')
+    else:
+        form = PasswordChangeForm(request.user)
+    
+    context = {'form': form}
+    return render(request, 'core/cambiar_password.html', context)
+
 
 def home(request):
     

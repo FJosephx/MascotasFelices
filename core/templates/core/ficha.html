@@ -44,9 +44,14 @@
 
 
           {% else %}
-
+          {% if user.is_authenticated %}
+          <a href="{% url 'agregar_producto_al_carrito' id %}"><button class="btn btn-primary btn-lg mt-3">Comprar</button></a>
+          <a href="{% url 'agregar_producto_al_carrito' id %}"><button class="btn btn-outline-primary btn-lg mt-3">Agregar al carrito <span><i class="bi bi-cart"></i></span></button></a>
+          {% else %}
           <a href="{% url 'iniciar_sesion' %}?comprar=True"><button class="btn btn-primary btn-lg mt-3">Comprar</button></a>
           <a href="{% url 'iniciar_sesion' %}?agregar_carrito=True"><button class="btn btn-outline-primary btn-lg mt-3">Agregar al carrito <span><i class="bi bi-cart"></i></span></button></a>
+          {% endif %}
+          
           {% endif %}
 
         </div>

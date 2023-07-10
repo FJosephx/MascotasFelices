@@ -88,6 +88,14 @@
               </ul>
             </li>
             {% endif %}
+            {% if mostrar_carrito %}
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="{% url 'carrito' %}">
+                <i class="bi bi-cart"></i>
+                {{ cantidad_productos }}
+              </a>
+            </li>
+            {% endif %}
 
           </ul>
   
