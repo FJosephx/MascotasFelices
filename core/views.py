@@ -308,7 +308,7 @@ def ventas(request):
     for boleta in boletas:
         boleta_historial = {
             'nro_boleta': boleta.nro_boleta,
-            'nom_cliente': f'{boleta.cliente.user.first_name} {boleta.cliente.usuario.last_name}',
+            'nom_cliente': f'{boleta.cliente.user.first_name} {boleta.cliente.user.last_name}',
             'fecha_venta': boleta.fecha_venta,
             'fecha_despacho': boleta.fecha_despacho,
             'fecha_entrega': boleta.fecha_entrega,

@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import cambiar_estado_boleta, poblar,obtener_productos,eliminar_producto_en_bodega,salir,admin_productos,ventas, usuarios,home, ropa, ficha, misdatos, nosotros, registro, iniciar_sesion, administracion, bodega, boleta, miscompras, carrito
-
+from django.views.generic.base import TemplateView
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     
@@ -25,9 +26,11 @@ urlpatterns = [
     path('poblar', poblar, name='poblar'),
     path('salir', salir, name='salir'),
     path('obtener_productos', obtener_productos, name='obtener_productos'),
-path('ventas', ventas, name='ventas'),
     path('boleta/<nro_boleta>', boleta, name='boleta'),
     path('cambiar_estado_boleta/<nro_boleta>/<estado>', cambiar_estado_boleta, name='cambiar_estado_boleta'),
     path('eliminar_producto_en_bodega/<bodega_id>', eliminar_producto_en_bodega, name='eliminar_producto_en_bodega'),
-
+    
+    path('password_cambiada/', TemplateView.as_view(template_name='core/password_cambiada.html'), name='password_cambiada'),
+    path('cambiar_password/', auth_views.PasswordChangeView.as_view(template_name='core/cambiar_password.html', success_url='/password_cambiada'), name='cambiar_password'),
+    
 ]

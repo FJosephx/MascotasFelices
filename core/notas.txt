@@ -47,6 +47,7 @@ feedback profe
 
 7 misdatos tiene que poder editar sus datos
     ya que se usan perfil y user que son 2 modelos diferentes
+    LISTO, se pueden editar los datos basicos
 
 8 cambiar lo que hace al guardar un producto nuevo
     ya que cuando lo guarda redirige a un producto nuevo
@@ -56,3 +57,9 @@ feedback profe
 
 10 falta crud de boleta y ventas
     listo,crud listo falta algunos detalles
+
+11 falta carrito para ET
+
+12 falta cambiar contraseña ET
+
+13 implementar webpay ET
