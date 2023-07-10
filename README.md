@@ -30,10 +30,21 @@ Ir a la Carpeta
   cd my-project
 ```
 
-Activar Ambiente Virtual
+Crea un Entorno Virtual
+```bash
+  python -m venv mascotasEntorno
+```
+
+Activar Entorno Virtual
 
 ```bash
   scripts activate.bat
+```
+
+Instala el Entorno
+
+```bash
+  python install -r path/to/requirements.txt 
 ```
 
 Inicia Django
