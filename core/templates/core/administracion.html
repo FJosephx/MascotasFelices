@@ -1,19 +1,20 @@
 {% extends 'core/base.html' %}
 {% load static %}
+{% load custom_filters %}
 
-{% block content %}
+{% block titulo %}
+Panel de Administracion
+{% endblock %}
 
 <h1 class="container">Panel de Administracion</h1>
 
 <div class="container">
-        <div class="btn-group btn-group-lg" role="group" aria-label="Basic outlined example">
-          <a href="{% url 'usuarios' %}"><button type="button" class="btn btn-outline-primary">Mantenedor de Usuarios</button></a>
-          <a href="{% url 'admin_productos' 'crear' '0' %}"><button type="button" class="btn btn-outline-primary">Mantenedor de Productos</button></a>
-          <a href="{% url 'ventas' %}"><button type="button" class="btn btn-outline-primary">Historial de Ventas</button></a>
-          <a href="{% url 'bodega' %}"><button type="button" class="btn btn-outline-primary">Mantenedor de Bodegas</button></a> 
-        </div>
-    
+  <div class="btn-group btn-group-lg" role="group" aria-label="Basic outlined example">
+    <a href="{% url 'usuarios' %}"><button type="button" class="btn btn-outline-primary">Mantenedor de Usuarios</button></a>
+    <a href="{% url 'admin_productos' 'crear' '0' %}"><button type="button" class="btn btn-outline-primary">Mantenedor de Productos</button></a>
+    <a href="{% url 'ventas' %}"><button type="button" class="btn btn-outline-primary">Historial de Ventas</button></a>
+    <a href="{% url 'bodega' %}"><button type="button" class="btn btn-outline-primary">Mantenedor de Bodegas</button></a> 
+  </div> 
 </div>
-
 
 {% endblock %}

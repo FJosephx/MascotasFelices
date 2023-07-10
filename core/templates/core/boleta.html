@@ -1,16 +1,15 @@
 {% extends 'core/base.html' %}
 {% load static %}
 {% load custom_filters %}
-
+{% block titulo %}
+Detalle Boleta N° {{ boleta.nro_boleta}}
+{% endblock %}
 {% block content %}
     <h1 class="container mt-4 text-center">Boleta N° {{ boleta.nro_boleta }}</h1>
-
-
-    
     <div>
         Venta: {{ boleta.fecha_venta|formatear_fecha }} | Despacho: {{ boleta.fecha_despacho|formatear_fecha }} | Entrega: {{ boleta.fecha_entrega|formatear_fecha }}
     </div>
-    
+
     <table id="tabla-principal" class="table table-hover">
         <thead>
             <tr>
