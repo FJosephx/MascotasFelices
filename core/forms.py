@@ -18,6 +18,8 @@ form_select_bodega = {'class':'form-select form-control form-control-sm'}
 form_text_area_registro = {'class': 'form-control form-control-sm', 'rows': 2, 'placeholder':'Ingrese una direccion'}
 
 form_control_registro = {'class': 'form-control form-control-sm'}
+form_control_inicio_sesion = {'class': 'form-control form-control-sm', 'placeholder':'Ingrese su Nombre de Usuario'}
+form_control_inicio_sesion_password = {'class': 'form-control form-control-sm', 'placeholder':'Ingrese su Contraseña'}
 
 form_hidden = {'class': 'd-none'}
 form_check = {'class': 'form-check-input'}
@@ -51,8 +53,8 @@ class ProductoForm(ModelForm):
 
 class IngresarForm(Form):
     
-    username = forms.CharField(widget=forms.TextInput(attrs=form_control), label="Cuenta")
-    password = forms.CharField(widget=forms.PasswordInput(attrs=form_control), label="Contraseña")
+    username = forms.CharField(widget=forms.TextInput(attrs=form_control_inicio_sesion), label="Cuenta")
+    password = forms.CharField(widget=forms.PasswordInput(attrs=form_control_inicio_sesion_password), label="Contraseña")
     class Meta:
         fields = ['username', 'password']
 

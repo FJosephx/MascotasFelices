@@ -18,13 +18,15 @@ Iniciar Sesion
           {% csrf_token %} 
           
 
-          <div class="form-floating mb-3">
-            {{ form.username }}
+          <div class="col mb-3">
             {{ form.username.label_tag }}
+            {{ form.username }}
+
           </div>
-          <div class="form-floating">
-            {{ form.password }}
+          <div class="col mb-3">
             {{ form.password.label_tag }}
+
+            {{ form.password }}
           </div>
 
 
@@ -62,3 +64,8 @@ Iniciar Sesion
 
 {% endblock %}
 
+
+{% block script %}
+<script src="{% static 'core/js/iniciar_sesion.js' %}"></script>
+
+{% endblock script %}
