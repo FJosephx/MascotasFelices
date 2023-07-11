@@ -87,6 +87,97 @@ def eliminar_tablas():
 def poblar_bd():
     eliminar_tablas()
 
+    crear_usuario(
+        username='cevans',
+        tipo='Cliente', 
+        nombre='Chris', 
+        apellido='Evans', 
+        correo='cevans@marvel.com', 
+        es_superusuario=False, 
+        es_staff=False, 
+        rut='15499707-3', 
+        direccion='123 Main Street, Los Angeles, \nCalifornia 90001 \nEstados Unidos', 
+        subscrito=True, 
+        imagen='perfiles/cevans.jpg')
+
+    crear_usuario(
+        username='eolsen',
+        tipo='Cliente', 
+        nombre='Elizabeth', 
+        apellido='Olsen', 
+        correo='eolsen@marvel.com', 
+        es_superusuario=False, 
+        es_staff=False, 
+        rut='19090011-2', 
+        direccion='Albert Street, New York, \nNew York 10001 \nEstados Unidos', 
+        subscrito=True, 
+        imagen='perfiles/eolsen.jpg')
+
+    crear_usuario(
+        username='tholland',
+        tipo='Cliente', 
+        nombre='Tom', 
+        apellido='Holland', 
+        correo='tholland@marvel.com', 
+        es_superusuario=False, 
+        es_staff=False, 
+        rut='23548549-0', 
+        direccion='105 Apple Park Way, \nCupertino, CA 95014 \nEstados Unidos', 
+        subscrito=False, 
+        imagen='perfiles/tholland.jpg')
+
+    crear_usuario(
+        username='sjohansson',
+        tipo='Cliente', 
+        nombre='Scarlett', 
+        apellido='Johansson', 
+        correo='sjohansson@marvel.com', 
+        es_superusuario=False, 
+        es_staff=False, 
+        rut='12788999-4', 
+        direccion='350 5th Ave, \nNew York, NY 10118 \nEstados Unidos', 
+        subscrito=False, 
+        imagen='perfiles/sjohansson.jpg')
+
+    crear_usuario(
+        username='cpratt',
+        tipo='Administrador', 
+        nombre='Chris', 
+        apellido='Pratt', 
+        correo='cpratt@marvel.com', 
+        es_superusuario=False, 
+        es_staff=True, 
+        rut='16543210-8', 
+        direccion='10 Pine Road, Miami, \nFlorida 33101 \nEstados Unidos', 
+        subscrito=False, 
+        imagen='perfiles/cpratt.jpg')
+    
+    crear_usuario(
+        username='mruffalo',
+        tipo='Administrador', 
+        nombre='Mark', 
+        apellido='Ruffalo', 
+        correo='mruffalo@marvel.com', 
+        es_superusuario=False, 
+        es_staff=True, 
+        rut='21123344-7', 
+        direccion='1600 Pennsylvania Avenue NW, \nWashington, D.C. \nEstados Unidos', 
+        subscrito=False, 
+        imagen='perfiles/mruffalo.jpg')
+
+    crear_usuario(
+        username='super',
+        tipo='Superusuario',
+        nombre='Robert',
+        apellido='Downey Jr.',
+        correo='rdowneyjr@marvel.com',
+        es_superusuario=True,
+        es_staff=True,
+        rut='18472636-6',
+        direccion='15 Oak Street, Los Angeles, \nCalifornia 90001 \nEstados Unidos',
+        subscrito=False,
+        imagen='perfiles/rdowneyjr.jpg')
+    
     categorias_data = [
         { 'id': 1, 'nombre': 'Perros'},
         { 'id': 2, 'nombre': 'Gatos'},
@@ -98,7 +189,7 @@ def poblar_bd():
     for categoria in categorias_data:
         Categoria.objects.create(**categoria)
     print('Categorías creadas correctamente')
-    
+
     productos_data = [
         # Categoría "Perros"
         {
@@ -310,3 +401,107 @@ def poblar_bd():
     for producto in productos_data:
         Producto.objects.create(**producto)
     print('Productos creados correctamente')
+
+    print('Crear carritos')
+    for rut in ['15499707-3', '23548549-0']:
+        cliente = Perfil.objects.get(rut=rut)
+        for cantidad_productos in range(1, 11):
+            producto = Producto.objects.get(pk=randint(1, 10))
+            if cliente.subscrito:
+                descuento_subscriptor = producto.descuento_subscriptor
+            else:
+                descuento_subscriptor = 0
+            descuento_oferta = producto.descuento_oferta
+            descuento_total = descuento_subscriptor + descuento_oferta
+            descuentos = int(round(producto.precio * descuento_total / 100))
+            precio_a_pagar = producto.precio - descuentos
+            Carrito.objects.create(
+                cliente=cliente,
+                producto=producto,
+                precio=producto.precio,
+                descuento_subscriptor=descuento_subscriptor,
+                descuento_oferta=descuento_oferta,
+                descuento_total=descuento_total,
+                descuentos=descuentos,
+                precio_a_pagar=precio_a_pagar
+            )
+    print('Carritos creados correctamente')
+
+    print('Crear boletas')
+    nro_boleta = 0
+    perfiles_cliente = Perfil.objects.filter(tipo_usuario='Cliente')
+    for cliente in perfiles_cliente:
+        estado_index = -1
+        for cant_boletas in range(1, randint(6, 21)):
+            nro_boleta += 1
+            estado_index += 1
+            if estado_index > 3:
+                estado_index = 0
+            estado = Boleta.ESTADO_CHOICES[estado_index][1]
+            fecha_venta = date(2023, randint(1, 5), randint(1, 28))
+            fecha_despacho = fecha_venta + timedelta(days=randint(0, 3))
+            fecha_entrega = fecha_despacho + timedelta(days=randint(0, 3))
+            if estado == 'Anulado':
+                fecha_despacho = None
+                fecha_entrega = None
+            elif estado == 'Vendido':
+                fecha_despacho = None
+                fecha_entrega = None
+            elif estado == 'Despachado':
+                fecha_entrega = None
+            boleta = Boleta.objects.create(
+                nro_boleta=nro_boleta, 
+                cliente=cliente,
+                monto_sin_iva=0,
+                iva=0,
+                total_a_pagar=0,
+                fecha_venta=fecha_venta,
+                fecha_despacho=fecha_despacho,
+                fecha_entrega=fecha_entrega,
+                estado=estado)
+            detalle_boleta = []
+            total_a_pagar = 0
+            for cant_productos in range(1, randint(4, 6)):
+                producto_id = randint(1, 10)
+                producto = Producto.objects.get(id=producto_id)
+                precio = producto.precio
+                descuento_subscriptor = 0
+                if cliente.subscrito:
+                    descuento_subscriptor = producto.descuento_subscriptor
+                descuento_oferta = producto.descuento_oferta
+                descuento_total = descuento_subscriptor + descuento_oferta
+                descuentos = int(round(precio * descuento_total / 100))
+                precio_a_pagar = precio - descuentos
+                bodega = Bodega.objects.create(producto=producto)
+                DetalleBoleta.objects.create(
+                    boleta=boleta,
+                    bodega=bodega,
+                    precio=precio,
+                    descuento_subscriptor=descuento_subscriptor,
+                    descuento_oferta=descuento_oferta,
+                    descuento_total=descuento_total,
+                    descuentos=descuentos,
+                    precio_a_pagar=precio_a_pagar)
+                total_a_pagar += precio_a_pagar
+            monto_sin_iva = int(round(total_a_pagar / 1.19))
+            iva = total_a_pagar - monto_sin_iva
+            boleta.monto_sin_iva = monto_sin_iva
+            boleta.iva = iva
+            boleta.total_a_pagar = total_a_pagar
+            boleta.fecha_venta = fecha_venta
+            boleta.fecha_despacho = fecha_despacho
+            boleta.fecha_entrega = fecha_entrega
+            boleta.estado = estado
+            boleta.save()
+            print(f'    Creada boleta Nro={nro_boleta} Cliente={cliente.usuario.first_name} {cliente.usuario.last_name}')
+    print('Boletas creadas correctamente')
+
+    print('Agregar productos a bodega')
+    for producto_id in range(1, 11):
+        producto = Producto.objects.get(id=producto_id)
+        cantidad = 0
+        for cantidad in range(1, randint(2, 31)):
+            Bodega.objects.create(producto=producto)
+        print(f'    Agregados {cantidad} "{producto.nombre}" a la bodega')
+    print('Productos agregados a bodega')
+
