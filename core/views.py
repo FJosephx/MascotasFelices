@@ -250,7 +250,7 @@ def cambiar_estado_boleta(request, nro_boleta, estado):
 
 def miscompras(request):
 
-    user = User.objects.get(username='cliente_usuario')
+    user = User.objects.get(username='usuario_cliente')
     perfil = Perfil.objects.get(user=user)
 
     boletas = Boleta.objects.filter(cliente=perfil)

@@ -9,6 +9,8 @@ def registrar_carrito(request):
         if request.user.perfil.tipo_usuario == 'Cliente':
             cantidad_productos = Carrito.objects.filter(cliente=request.user.perfil).count()
             mostrar_carrito = cantidad_productos > 0
+
+        
    
     return {
         'mostrar_carrito': mostrar_carrito,
